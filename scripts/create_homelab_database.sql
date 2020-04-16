@@ -24,7 +24,7 @@ create table arquivo(
     FOREIGN KEY(idPermissao) references permissao(id)
 );
 
-create table arquivoTags(
+create table arquivo_tags(
     idArquivo INTEGER NOT NULL,
     idTag INTEGER NOT NULL,
     tag TEXT NOT NULL,
