@@ -54,24 +54,25 @@
 	</head>
 	<body class="text-white">
 		<div class="container-fluid align-items-end  h-100" style="margin-top: 95px;">
-			<form>
+			<form method="post">
 				<div class="row justify-content-center align-items-center"><h1>HomeLab</h1>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
 					<div class="col-1 text-right"><label class="col-form-label">Login:</label></div>
 					<div class="col-4">
-					<input class="form-control" placeholder="Login">
+					<input class="form-control" name="login" placeholder="Login">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
 					<div class="col-1 text-right"><label class="col-form-label">Password:</label></div>
 					<div class="col-4">
-						<input type="password" class="form-control" placeholder="Password">
+						<input type="password" class="form-control" name="password" placeholder="Password">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
 					<div class="col-1"><button type="submit" class="btn btn-primary">Submit</button></div>
-					<div class="col-2"><button type="submit" class="btn btn-secondary">register</button></div>
+					<!--<div class="col-2"><button type="submit" class="btn btn-secondary">register</button></div>-->
+					<div class="col-2"><a type="submit" class="btn btn-secondary" href="/signup">register</a></div>
 				</div>
 			</form>
 		</div>
