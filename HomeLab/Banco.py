@@ -20,10 +20,49 @@ class Usuario(Base):
     senha = Column(String, nullable=False)
     email = Column(String, nullable=False)
     idAdm = Column(Integer, ForeignKey('usuario.id')) # FOREIGN KEY(idAdm) references usuario(id)
+
+    def __init__(self, *args, **kwargs):
+        self._filter = kwargs
+        Base.__init__(self, *args, **kwargs)
     # adm = relationship("usuario", back_populates="usuario")
 
+    # def __init__(self, nome, *args, **kwargs):
+    #     self.nome = nome
+    #     print(args)
+    #     print(kwargs)
+    #     print(self.id)
+    # def _filter(self):
+    #     return {
+    #         'id': self.id,
+    #         'nome': self.nome,
+    #         'login': self.login,
+    #         'senha': self.senha,
+    #         'email': self.email,
+    #         'idAdm': self.idAdm
+    #     }
+    def serialize(self):
+        '''
+        serialize serve para serealizar o obj, pode ser usado em sessão,
+        diferente do atributo _filter(obs.: não use _filter, pois o mesmo contêm dados
+        importantes e não deve estar contido na sessão devido a segurança.
+        '''
+        return {
+            'login' : self.login,
+            'nome'  : self.nome,
+            # 'id'    : self.id
+        }
 
+    def __repr__(self):
+        return str(self._filter)
 
+    def logar(self, login, password):
+        if self.login == login and self.senha == password:
+            return True
+        else:
+            return False
+
+    def cadastrar(self):
+        pass
 
 class Arquivo(Base):
     __tablename__ = "arquivo"
@@ -84,7 +123,8 @@ class Banco(Session):
     def consultarUsuario(self, usuario):
         if not isinstance(usuario, Usuario):
             raise TypeError("Objeto passado não é da instância Usuario")
-        return self.query(Usuario).filter_by(login=usuario.login).all()
+
+        return self.query(Usuario).filter_by(**usuario._filter).first()
 
 if __name__ == "__main__":
     # Session = sessionmaker(bind=engine)

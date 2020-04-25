@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">
+	<link rel="stylesheet" href="static/css/home.css">
+	<script src="static/js/bootstrap/bootstrap.min.js"></script>
+
+    <meta charset="UTF-8">
+    <title>Tela de cadastro</title>
+	<style>
+		body{
+			background-image: url({{ url_for('static', filename="images/code.jpg") }});
+			background-color: #cccccc;
+			background-attachment: fixed;
+			background-position: center center;
+			background-size: cover;
+			background-repeat: no-repeat;
+		}
+	</style>
+</head>
+<body class="bg-dark text-white">
+		<div class="container-fluid align-items-end  h-100" style="margin-top: 95px;">
+			{%print teste %}
+			<form method="post">
+				<div class="row justify-content-center align-items-center"><h1>HomeLab</h1>
+				</div>
+				<div class="row p-1 m-1 justify-content-center align-items-center">
+					<div class="col-1 text-right"><label class="col-form-label">Login:</label></div>
+					<div class="col-4">
+					<input class="form-control" name="login" placeholder="Login">
+					</div>
+				</div>
+				<div class="row p-1 m-1 justify-content-center align-items-center">
+					<div class="col-1 text-right"><label class="col-form-label">E-mail:</label></div>
+					<div class="col-4">
+					<input class="form-control" name="email" placeholder="E-mail">
+					</div>
+				</div>
+				<div class="row p-1 m-1 justify-content-center align-items-center">
+					<div class="col-1 text-right"><label class="col-form-label">Password:</label></div>
+					<div class="col-4">
+						<input type="password" class="form-control" name="password" placeholder="Password">
+					</div>
+				</div>
+				<div class="row p-1 m-1 justify-content-center align-items-center">
+					<div class="col-1 text-right"><label class="col-form-label">Re-Password:</label></div>
+					<div class="col-4">
+						<input type="password" class="form-control" name="re-password" placeholder="Re-Password">
+					</div>
+				</div>
+				<div class="row p-1 m-1 justify-content-center align-items-center">
+					<div class="col-1"><button type="submit" class="btn btn-primary">Submit</button></div>
+					<div class="col-2"><a type="submit" class="btn btn-secondary" href="/">Login</a></div>
+				</div>
+			</form>
+		</div>
+	</body>
+</html>
