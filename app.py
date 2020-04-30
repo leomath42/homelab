@@ -4,7 +4,7 @@ import json
 import os
 from flask import Flask, session, render_template
 from flask import request, redirect, url_for, abort
-from sqlalchemy.orm.scoping import scoped_session
+# from sqlalchemy.orm.scoping import scoped_session
 from HomeLab.Banco import *
 from HomeLab.config import config
 
@@ -41,6 +41,9 @@ def login():
             return redirect(url_for("home", username=usuario.login))
         else:
             pass
+    elif request.method == 'GET' and 'usuario' in session:
+        username = json.loads(session.get('usuario')).get('login')
+        return redirect(url_for("home", username=username))
 
     return render_template("login.html")
 
@@ -62,14 +65,36 @@ def signup():
 
 @app.route("/home/<username>", methods=['POST', 'GET'])
 def home(username):
+    if not "usuario" in session:
+        abort(404)
     if not username in json.loads(session.get('usuario')).values():
         abort(404)
     if request.method == 'POST':
         print('hello world\n')
     else:
-        return render_template("index.html")
+        return render_template("index.html", username=username)
+
+@app.route("/home/commands", methods=['POST'])
+def commands():
+    if not 'usuario' in session:
+        abort(404)
+    if request.method == 'POST':
+        data = request.form.get("data")
+        if data == "sair":
+            session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
+            return "sair"
+        elif data == "":
+            pass
+        else:
+            pass
+    return render_template('index.html')
+
+@app.route("/home/<username>/sair", methods=['GET','POST'])
+def sair(username):
+    session.clear()
+    return redirect(url_for("login"))
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, host='0.0.0.0')
 
 # request
