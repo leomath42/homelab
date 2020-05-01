@@ -1,35 +1,16 @@
-.center_div{
-    position: relative;
-    left: 0.4%;
-    bottom: 0.5%;
-}
-.middle{
-    vertical-align:middle;
-}
-.Absolute-Center {
-  width: 90%;
-  height: 50%;
-  overflow: auto;
-  margin: auto;
-  position: center;
-  top: 0; left: 0; bottom: 0; right: 0;
-  border: solid black;
-}
-.Center-Container {
-  position: relative;
-  height: 100%;
+.box{
+    width: 50%;
+    height: 50%;
+    background: black;
+
 }
 
-:root{
-    font-size: 16px;
-    font-family: 'Open Sans';
-    --text-primary: #b6b6b6;
-    --text-secondary: #ececec;
-    --bg-primary: #23232e;
-    --bg-secondary: #141418;
+.center{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
-
-/* Style the label to display next to the inputs */
 label {
   padding: 12px 12px 12px 0;
   display: inline-block;

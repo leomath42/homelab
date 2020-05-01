@@ -2,9 +2,12 @@
 <html lang="en">
 <head>
 	<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">
-	<link rel="stylesheet" href="static/css/home.css">
-	<script src="static/js/bootstrap/bootstrap.min.js"></script>
-
+<!--	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+	<link rel="stylesheet" href="static/css/signup.css">
+	<script type="text/javascript" src="static/js/jquery/jquery-3.5.0.min.js"></script>
+	<script type="text/javascript" src="static/js/bootstrap/bootstrap.min.js"></script>
+<!--	<script type = "text/javascript" src='/static/hello.js' ></script>-->
+<!--	<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">-->
     <meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Tela de cadastro</title>
@@ -21,39 +24,43 @@
 </head>
 <body class="bg-dark text-white">
 		<div class="container-fluid align-items-end  h-100" style="margin-top: 95px;">
-			{%print teste %}
+<!--			{%print teste %}-->
+			<div class="center">
+			<div class="row justify-content-center align-items-center"><h1>HomeLab</h1></div>
 			<form method="post">
-				<div class="row justify-content-center align-items-center"><h1>HomeLab</h1>
-				</div>
+				<div class="box">
+				<div class="row justify-content-center align-items-center"><h1>Cadastro</h1></div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-1 text-right"><label class="col-form-label">Login:</label></div>
-					<div class="col-4">
+<!--					<div class="col-1 text-right"><label class="col-form-label">Login:</label></div>-->
+					<div class="col-12">
 					<input class="form-control" name="login" placeholder="Login">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-1 text-right"><label class="col-form-label">E-mail:</label></div>
-					<div class="col-4">
+<!--					<div class="col-1 text-right"><label class="col-form-label">E-mail:</label></div>-->
+					<div class="col-12">
 					<input class="form-control" name="email" placeholder="E-mail">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-1 text-right"><label class="col-form-label">Password:</label></div>
-					<div class="col-4">
+<!--					<div class="col-1 text-right"><label class="col-form-label">Password:</label></div>-->
+					<div class="col-12">
 						<input type="password" class="form-control" name="password" placeholder="Password">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-1 text-right"><label class="col-form-label">Re-Password:</label></div>
-					<div class="col-4">
+<!--					<div class="col-1 text-right"><label class="col-form-label">Re-Password:</label></div>-->
+					<div class="col-12">
 						<input type="password" class="form-control" name="re-password" placeholder="Re-Password">
 					</div>
 				</div>
 				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-1"><button type="submit" class="btn btn-primary">Submit</button></div>
-					<div class="col-2"><a type="submit" class="btn btn-secondary" href="/">Login</a></div>
+					<div class="col-6"><button type="submit" class="btn btn-primary">confirmar</button></div>
+					<div class="col-6"><a type="submit" class="btn btn-secondary" href="/">Login</a></div>
 				</div>
 			</form>
+		</div>
+		</div>
 		</div>
 	</body>
 </html>

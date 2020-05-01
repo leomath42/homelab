@@ -28,60 +28,7 @@
 			background-repeat: no-repeat;
 			height: 100%
 		}
-		:root{
-			font-size: 16px;
-			font-family: 'Open Sans';
-			--text-primary: #b6b6b6;
-			--text-secondary: #ececec;
-			--bg-primary: #23232e;
-			--bg-secondary: #141418;
-		}
 
-		/* Style the label to display next to the inputs */
-		label {
-		  padding: 12px 12px 12px 0;
-		  display: inline-block;
-		}
-		.box {
-		  width: 300px;
-		  border: 5px solid;
-		  border-color: #407e96;
-		  border-radius: 24px;
-		  padding: 40px;
-
-		  background: #191919;
-		  text-align: center;
-		}
-		.box input{
-			border:0;
-			height: 3em;
-			border-radius: 12px;
-			border: 2px solid #008000;
-			text-align: center;
-			outline: none;
-
-
-			margin: auto;
-			padding: 14px 10px;
-
-			resize:both;
-
-		}
-		.box input:focus{
-			width: auto;
-			margin-left: 0px;
-			margin-right: 40px;
-			border: 2px solid #0000FF;
-			border-spacing:50px;
-			display: block;
-			resize:both;
-		}
-		.center{
-		 	position: absolute;
-			top: 50%;
-			left: 50%;
-			transform: translate(-50%, -50%);
-		}
        </style>
 	</head>
 	<body class="text-white teste">
@@ -106,10 +53,10 @@
 					<input type="password" class="form-control" name="password" placeholder="Password">
 				</div>
 			</div>
-			<div class="row p-1 m-1">
-				<div class="col-5 "><button type="submit" class="btn btn-primary">Submit</button></div>
+			<div class="row px-auto mx-auto">
+				<div class="col-6 "><button type="submit" class="btn btn-primary">confirmar</button></div>
 				<!--<div class="col-2"><button type="submit" class="btn btn-secondary">register</button></div>-->
-				<div class="col-5"><a type="submit" class="btn btn-secondary" href="/signup">register</a></div>
+				<div class="col-6"><a type="submit" class="btn btn-secondary" href="/signup">signup</a></div>
 			</div>
 
 		</div>
