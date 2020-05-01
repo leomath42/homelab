@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="pt-br" dir="ltr">
+
+	<head>
+    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<!--		<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">-->
+		<link rel="stylesheet" href="static/css/home.css">
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>home lab</title>
+
+		<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+<!--		<script src="static/js/bootstrap/bootstrap.min.js"></script>-->
+		<script type = "text/javascript" src='/static/hello.js' ></script>
+		<link rel="stylesheet" href="/static/css/login.css" >
+
+		<style>
+           body{
+			background-image: url({{ url_for('static', filename="images/code.jpg") }});
+			background-color: #cccccc;
+			background-attachment: fixed;
+			background-position: center center;
+			background-size: cover;
+			background-repeat: no-repeat;
+			height: 100%
+		}
+		:root{
+			font-size: 16px;
+			font-family: 'Open Sans';
+			--text-primary: #b6b6b6;
+			--text-secondary: #ececec;
+			--bg-primary: #23232e;
+			--bg-secondary: #141418;
+		}
+
+		/* Style the label to display next to the inputs */
+		label {
+		  padding: 12px 12px 12px 0;
+		  display: inline-block;
+		}
+		.box {
+		  width: 300px;
+		  border: 5px solid;
+		  border-color: #407e96;
+		  border-radius: 24px;
+		  padding: 40px;
+
+		  background: #191919;
+		  text-align: center;
+		}
+		.box input{
+			border:0;
+			height: 3em;
+			border-radius: 12px;
+			border: 2px solid #008000;
+			text-align: center;
+			outline: none;
+
+
+			margin: auto;
+			padding: 14px 10px;
+
+			resize:both;
+
+		}
+		.box input:focus{
+			width: auto;
+			margin-left: 0px;
+			margin-right: 40px;
+			border: 2px solid #0000FF;
+			border-spacing:50px;
+			display: block;
+			resize:both;
+		}
+		.center{
+		 	position: absolute;
+			top: 50%;
+			left: 50%;
+			transform: translate(-50%, -50%);
+		}
+       </style>
+	</head>
+	<body class="text-white teste">
+		<form method="post" class="">
+		<div class="center">
+		<div class="row justify-content-center align-items-center">
+				<h1>HomeLab</h1>
+		</div>
+		<div class="container box justify-content-center p-12">
+			<div class="row justify-content-center align-items-center">
+				<h1>Login</h1>
+			</div>
+			<div class="row p-1 m-1 justify-content-center align-items-center">
+<!--				<div class="col-2"><label class="col-form-label">Login:</label></div>-->
+				<div class="col-12">
+				<input class="form-control" name="login" id="login" placeholder="Login">
+				</div>
+			</div>
+			<div class="row p-1 m-1 justify-content-center align-items-center">
+<!--				<div class="col-2"><label class="col-form-label">Password:</label></div>-->
+				<div class="col-12">
+					<input type="password" class="form-control" name="password" placeholder="Password">
+				</div>
+			</div>
+			<div class="row p-1 m-1">
+				<div class="col-5 "><button type="submit" class="btn btn-primary">Submit</button></div>
+				<!--<div class="col-2"><button type="submit" class="btn btn-secondary">register</button></div>-->
+				<div class="col-5"><a type="submit" class="btn btn-secondary" href="/signup">register</a></div>
+			</div>
+
+		</div>
+		</div>
+		</form>
+	</body>
+
+</html>
+
+

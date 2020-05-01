@@ -1,7 +1,7 @@
 create table usuario(
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nome TEXT NOT NULL,
-    login TEXT NOT NULL,
+    login TEXT NOT NULL UNIQUE,
     senha TEXT NOT NULL,
     email TEXT NOT NULL,
     idAdm INTEGER,
@@ -9,14 +9,14 @@ create table usuario(
 );
 
 create table dispositivo(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     funcao INTEGER NOT NULL,
     idPermissao INTEGER NOT NULL,
     FOREIGN KEY(idPermissao) references permissao(id)
 );
 
 create table arquivo(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nomeArquivo TEXT NOT NULL,
     path TEXT NOT NULL,
     tipoArquivo TEXT NULL,
@@ -24,7 +24,7 @@ create table arquivo(
     FOREIGN KEY(idPermissao) references permissao(id)
 );
 
-create table arquivoTags(
+create table arquivo_tags(
     idArquivo INTEGER NOT NULL,
     idTag INTEGER NOT NULL,
     tag TEXT NOT NULL,
@@ -32,7 +32,7 @@ create table arquivoTags(
 );
 
 create table permissao(
-    id INTEGER NOT NULL PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     nivelRestricao INTEGER NOT NULL
 );
 
