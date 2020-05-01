@@ -7,4 +7,5 @@ __pycache__/
 static/css/home.css
 templates/home_old.html
 .ropeproject
-.idea/
+.idea
+bancos/*
