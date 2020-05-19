@@ -4,7 +4,7 @@ sequencia_do_sistema.mdj
 app.py~
 __pycache__/
 .app.py.un~
-static/css/home.css
+static/css/home.css.old
 templates/home_old.html
 .ropeproject
 .idea

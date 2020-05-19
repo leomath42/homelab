@@ -1,0 +1,113 @@
+@media only screen and (max-width: 576px){
+    .navbar-nav{
+        position: 0;
+        bottom: 0;
+    }
+    ul[data-type='navbar'] {
+      position:fixed;
+      bottom: 0;
+      flex-direction: row;
+      width: 100vw;
+      min-height:none;
+      height:none;
+      /*align-items: center!important;*/
+    }
+    nav[data-type='navbar']{
+        position: fixed;
+        bottom: 0;
+        flex-direction: row;
+        /* left: 0; */
+        z-index: 1030;
+    }
+    main{
+        min-width: 100%;
+    }
+}
+
+@media only screen and (min-width: 576px){
+    ul[data-type='navbar'] {
+      background: var(--bg-primary);
+      align-items: center!important;
+      height: 100vh!important;
+      min-height: 100%;
+    }
+}
+@media only screen and (min-width: 1000px){
+    ul[data-type='navbar'] {
+      /*background: black;*/
+      align-items: unset!important;
+    }
+}
+
+.conteiner{
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+:root{
+    /*font-size: 16px;
+    font-family: 'Open Sans';*/
+    --text-primary: #b6b6b6;
+    --text-secondary: #ececec;
+    --bg-primary: #23232e;
+    --bg-secondary: #141418;
+    --text-link: #537fad;
+}
+ul[data-type='navbar'] {
+      /*background: black;*/
+      background: var(--bg-primary);
+}
+svg{
+    width: 25px;
+    height: 25px;
+}
+/*url("{{url_for('static',filename='images/user-solid.svg')}}");*/
+.bimage{
+    /*width: 800px;
+    height: 100px;*/
+    /*padding: 75px;*/
+    min-height: 150px;
+    max-width: 300px;
+    background-image:url("../images/user-solid.svg");
+    background-repeat: no-repeat;
+    display: inline-block;
+    align-content: center;
+    align-items: center;
+    background-position: center;
+    background-color: var(--text-link);
+}
+.form-control{
+    min-width: 15rem;
+    height: 2rem;
+    background: #23232e;
+    color: white;
+    font-style: normal;
+    border: 1px solid #6EA1A5;
+    border-radius: 12px;
+    margin: 1px;
+    padding: 1px;
+    text-align: center;
+}
+.nav-link {
+    justify-content: center;
+    align-items: center;
+}/*
+.navbar{
+        bottom:0;
+        height: 4rem;
+        width: 100vw;
+    }*/
+/*15[111.328 x 418.859]15*/
+/*.navbar-nav{
+    background: var(--bg-secondary);
+
+}**/
+.nav-link{
+    /*display: flex;
+    align-items: center;
+    color: var(--text-primary);
+    text-decoration: none;
+    filter: grayscale(100%) opacity(0.7);
+    transition: var(--transition-speed);*/
+    color: var(--text-link);
+    /*filter: grayscale(100%) opacity(0.7);*/
+}

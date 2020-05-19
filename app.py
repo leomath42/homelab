@@ -2,7 +2,7 @@
 
 import json
 import os
-from flask import Flask, session, render_template
+from flask import Flask, session, render_template, make_response
 from flask import request, redirect, url_for, abort
 # from sqlalchemy.orm.scoping import scoped_session
 from HomeLab.Banco import *
@@ -38,7 +38,11 @@ def login():
             pass
         elif usuario.logar(form['login'], form['password']):
             session["usuario"] = json.dumps(usuario.serialize())
-            return redirect(url_for("home", username=usuario.login))
+            resp = make_response(redirect(url_for("home", username=usuario.login)))
+            resp.set_cookie('usuario', json.dumps(usuario.serialize(), separators=(",", ":")))
+            #resp.set_cookie('teste', "{'teste':'teste'}")
+            return resp
+
         else:
             pass
     elif request.method == 'GET' and 'usuario' in session:
@@ -72,7 +76,7 @@ def home(username):
     if request.method == 'POST':
         print('hello world\n')
     else:
-        return render_template("index.html", username=username)
+        return render_template("home.html", username=username)
 
 @app.route("/home/commands", methods=['POST'])
 def commands():
@@ -83,16 +87,26 @@ def commands():
         if data == "sair":
             session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
             return "sair"
-        elif data == "":
+        elif data == "usuario":
+            return render_template('user.html')
+
+        elif data == "folder":
+            return render_template('folder.html')
+        elif data == "update_usuario":
             pass
         else:
-            pass
+            return ""
     return render_template('index.html')
 
 @app.route("/home/<username>/sair", methods=['GET','POST'])
 def sair(username):
     session.clear()
     return redirect(url_for("login"))
+
+
+@app.route("/folder")
+def teste():
+    return render_template("folder.html")
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')

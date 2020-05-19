@@ -49,7 +49,7 @@ class Usuario(Base):
         return {
             'login' : self.login,
             'nome'  : self.nome,
-            # 'id'    : self.id
+            'id'    : self.id
         }
 
     def __repr__(self):
@@ -126,6 +126,9 @@ class Banco(Session):
 
         return self.query(Usuario).filter_by(**usuario._filter).first()
 
+    def updateUsuario(self, usuario):
+        # self.
+        pass
 if __name__ == "__main__":
     # Session = sessionmaker(bind=engine)
     # Session.configure(bind=engine)
