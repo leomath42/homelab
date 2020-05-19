@@ -1,2 +1,2 @@
 static/js/bootstrap/* linguist-vendored
-*.css linguist-detectable=false
+templates/*
