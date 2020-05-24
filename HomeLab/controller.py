@@ -3,8 +3,18 @@ from HomeLab.Banco import *
 class Controller:
 
     @staticmethod
-    def logar():
-        pass
+    def logar(form, session, banco):
+        login = form.get('login')
+        senha = form.get('senha')
+        usuario = banco.consultarUsuario(Usuario(login=login))
+
+        if session.get('usuario') or usuario.senha == senha:
+            session['usuario'] = usuario.serialize()
+            return True
+        # elif not usuario:
+        #     return False
+        else:
+            return False
 
     @staticmethod
     def cadastrar():

@@ -25,19 +25,11 @@ def login():
     login = password = None
 
     if request.method == 'POST':
-
         form = request.form
-        login = form['login']
-        senha = form['password']
 
-        usuario = Usuario(login=login)
-        # print(usuario._filter)
-        usuario = banco.consultarUsuario(usuario)
-
-        if usuario is None:
-            pass
-        elif usuario.logar(form['login'], form['password']):
-            session["usuario"] = json.dumps(usuario.serialize())
+        if Controller.logar(form, session, banco):
+            # session["usuario"] = json.dumps(usuario.serialize())
+            usuario = Usuario(**session.get('usuario'))
             resp = make_response(redirect(url_for("home", username=usuario.login)))
             resp.set_cookie('usuario', json.dumps(usuario.serialize(), separators=(",", ":")))
             #resp.set_cookie('teste', "{'teste':'teste'}")
@@ -46,17 +38,15 @@ def login():
         else:
             pass
     elif request.method == 'GET' and 'usuario' in session:
-        username = json.loads(session.get('usuario')).get('login')
-        return redirect(url_for("home", username=username))
+        # username = json.loads(session.get('usuario')).get('login')
+        usuario = Usuario(**session.get('usuario'))
+        return redirect(url_for("home", username=usuario.login))
 
     return render_template("login.html")
 
 
 @app.route("/signup", methods=['GET', 'POST'])
 def signup():
-    print(session.items())
-    # teste
-    login = email = password = re_password = None
     if request.method == 'POST':
         form = request.form
         login = form['login']
@@ -69,12 +59,8 @@ def signup():
 
 @app.route("/home/<username>", methods=['POST', 'GET'])
 def home(username):
-    if not "usuario" in session:
+    if not session.get('usuario') or Usuario(**session.get('usuario')).nome != username:
         abort(404)
-    if not username in json.loads(session.get('usuario')).values():
-        abort(404)
-    if request.method == 'POST':
-        print('hello world\n')
     else:
         return render_template("home.html", username=username)
 
@@ -82,6 +68,7 @@ def home(username):
 def commands():
     form = request.form
     banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+
     if not 'usuario' in session:
         abort(404)
     if request.method == 'POST':
@@ -90,8 +77,8 @@ def commands():
             session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
             return "sair"
         elif data == "usuario":
-            session.get('usuario')
-            return render_template('user.html')
+            usuario = Usuario(**session.get('usuario'))
+            return render_template('user.html', usuario=usuario)
 
         elif data == "folder":
             return render_template('folder.html')

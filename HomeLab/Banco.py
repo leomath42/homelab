@@ -43,9 +43,10 @@ class Usuario(Base):
         importantes e não deve estar contido na sessão devido a segurança.
         '''
         return {
-            'login' : self.login,
-            'nome'  : self.nome,
-            'id'    : self.id
+            'login': self.login,
+            'nome':  self.nome,
+            'email': self.email,
+            'id':    self.id
         }
 
     def __repr__(self):
@@ -125,12 +126,13 @@ class Banco(Session):
         # recupera entidade usuário
         usuario = self.query(Usuario).filter_by(**usuario._filter).first()
         # init usuario para virar modelo
-        usuario = Usuario(id = usuario.id,
-                          login=usuario.login,
-                          nome=usuario.nome,
-                          email=usuario.email,
-                          senha=usuario.senha,
-                          idAdm=usuario.idAdm)
+        if usuario:
+            usuario = Usuario(id = usuario.id,
+                              login=usuario.login,
+                              nome=usuario.nome,
+                              email=usuario.email,
+                              senha=usuario.senha,
+                              idAdm=usuario.idAdm)
         return usuario
 
     def updateUsuario(self, usuario, **update):
