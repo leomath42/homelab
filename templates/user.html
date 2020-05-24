@@ -17,22 +17,28 @@
 <body>
 
     <main class="col-12 col-sm-10 col-md-10 col-lg-10 p-5">
-        <form>
+        <form method="post">
             <div class="row justify-content-center">
                 <div class="w-100" style="height: 2vh;"></div>
                 <div class="col-12 order-2 col-md-6 col-lg-6">
                     <div class="row">
                         <div class="col-12">
-                            <input class="form-control" name="login" placeholder="login" value="login">
+                            <input class="form-control" id="input-login" name="login" placeholder="login" value="">
                         </div>
                         <div class="col-12">
-                            <input class="form-control" name="login" placeholder="login" value="login">
+                            <input class="form-control" id="input-nome" name="nome" placeholder="nome" value="">
                         </div>
                         <div class="col-12">
-                            <input class="form-control" name="login" placeholder="login" value="login">
+                            <input class="form-control" id="input-email" name="email" placeholder="e-mail" value="">
                         </div>
                         <div class="col-12">
-                            <input class="form-control" name="login" placeholder="login" value="login">
+                            <input class="form-control" id="input-senha" name="senha" type="password" placeholder="senha" value="">
+                        </div>
+                        <div class="col-6">
+                            <a href="#" class="btn btn-primary m-2" onclick="update_usuario()"> confirmar </a>
+                        </div>
+                        <div class="col-6">
+                            <button class="btn btn-secondary m-2">mudar senha</button>
                         </div>
                     </div>
                 </div><div class="w-100 order-3" style="height: 2vh;"></div>
