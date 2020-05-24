@@ -7,7 +7,7 @@ from flask import request, redirect, url_for, abort
 # from sqlalchemy.orm.scoping import scoped_session
 from HomeLab.Banco import *
 from HomeLab.config import config
-
+from HomeLab.controller import Controller
 
 app = Flask(__name__)
 app.secret_key = os.urandom(16)
@@ -80,20 +80,26 @@ def home(username):
 
 @app.route("/home/commands", methods=['POST'])
 def commands():
+    form = request.form
+    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
     if not 'usuario' in session:
         abort(404)
     if request.method == 'POST':
-        data = request.form.get("data")
+        data = form.get("data")
         if data == "sair":
             session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
             return "sair"
         elif data == "usuario":
+            session.get('usuario')
             return render_template('user.html')
 
         elif data == "folder":
             return render_template('folder.html')
+
         elif data == "update_usuario":
-            pass
+            Controller.updateUser(form, banco)
+            return render_template('user.html')
+
         else:
             return ""
     return render_template('index.html')
@@ -102,7 +108,6 @@ def commands():
 def sair(username):
     session.clear()
     return redirect(url_for("login"))
-
 
 @app.route("/folder")
 def teste():
