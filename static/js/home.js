@@ -77,7 +77,13 @@ function folder(){
 function update_usuario(){
     var data = "update_usuario";
     var usuario = getCookie("usuario");
-    $.post('/home/commands', {'data':data, 'id':usuario.id}, function(data){
+    var login = $("#input-login").val()
+    var nome = $("#input-nome").val()
+    var email = $("#input-email").val()
+    var senha = $("#input-senha").val()
+    var info = {data, 'id':usuario.id, login, nome, email, senha}
+    $.post('/home/commands', info, function(data){
         //nothing to do for while;
+        location.replace("/")
     });
 }
