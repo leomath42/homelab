@@ -23,23 +23,19 @@ class Usuario(Base):
 
     def __init__(self, *args, **kwargs):
         self._filter = kwargs
+        # self._update = self.__dict__
+
         Base.__init__(self, *args, **kwargs)
+
     # adm = relationship("usuario", back_populates="usuario")
 
-    # def __init__(self, nome, *args, **kwargs):
-    #     self.nome = nome
-    #     print(args)
-    #     print(kwargs)
-    #     print(self.id)
-    # def _filter(self):
-    #     return {
-    #         'id': self.id,
-    #         'nome': self.nome,
-    #         'login': self.login,
-    #         'senha': self.senha,
-    #         'email': self.email,
-    #         'idAdm': self.idAdm
-    #     }
+    @property
+    def _update(self):
+        __update = self.__dict__.copy()
+        __update.pop('_sa_instance_state')
+        __update.pop('_filter')
+        return __update
+
     def serialize(self):
         '''
         serialize serve para serealizar o obj, pode ser usado em sessão,
@@ -100,6 +96,9 @@ class Permissao(Base):
 
 
 class Banco(Session):
+    '''
+    obs.: Talvez seja bom mudar os métodos para staticmethod ou classmethod
+    '''
     def __init__(self, bind=None, bind_name=None, echo=True, *args, **kwargs):
         #self.bind = kwargs['engine']
         if bind is None:
@@ -123,12 +122,32 @@ class Banco(Session):
     def consultarUsuario(self, usuario):
         if not isinstance(usuario, Usuario):
             raise TypeError("Objeto passado não é da instância Usuario")
+        # recupera entidade usuário
+        usuario = self.query(Usuario).filter_by(**usuario._filter).first()
+        # init usuario para virar modelo
+        usuario = Usuario(id = usuario.id,
+                          login=usuario.login,
+                          nome=usuario.nome,
+                          email=usuario.email,
+                          senha=usuario.senha,
+                          idAdm=usuario.idAdm)
+        return usuario
 
-        return self.query(Usuario).filter_by(**usuario._filter).first()
+    def updateUsuario(self, usuario, **update):
+        if not isinstance(usuario, Usuario):
+            raise TypeError("Objeto passado não é da instância Usuario")
 
-    def updateUsuario(self, usuario):
-        # self.
-        pass
+        usuario = self.query(Usuario)\
+            .filter_by(**usuario._filter)\
+            .update({**usuario._update}, synchronize_session=False)
+        self.commit()
+        # usuario = Usuario(id=usuario.id,
+        #                   login=usuario.login,
+        #                   nome=usuario.nome,
+        #                   email=usuario.email,
+        #                   senha=usuario.senha,
+        #                   idAdm=usuario.idAdm)
+        # return usuario
 if __name__ == "__main__":
     # Session = sessionmaker(bind=engine)
     # Session.configure(bind=engine)
