@@ -2,8 +2,8 @@
 import sqlalchemy
 from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey
-from sqlalchemy.orm import relationship, sessionmaker, Session
+from sqlalchemy import Column, Integer, String, ForeignKey, Table
+from sqlalchemy.orm import relationship, sessionmaker, Session, backref
 
 
 import sys
@@ -12,6 +12,18 @@ import os
 engine = create_engine("sqlite:////home/mohelot/projetos/home_lab/bancos/homelab.db", echo=True)
 Base = declarative_base()
 
+class UsuarioPermissao(Base):
+    __tablename__ = "usuario_permissao"
+    idUsuario = Column(Integer, ForeignKey("usuario.id"), primary_key=True)
+    idPermissao = Column(Integer, ForeignKey("permissao.id"), primary_key=True)
+
+#     usuario = relationship("Usuario", backref=backref("usuario_permissao"))
+#     permissao = relationship("Permissao", backref=backref("usuario_permissao"))
+
+# usuario_permissao = Table('usuario_permissao', Base.metadata,
+#     Column('idUsuario', Integer, ForeignKey("usuario.id"), primary_key=True),
+#     Column('idPermissao',Integer, ForeignKey("permissao.id"), primary_key=True)
+# )
 class Usuario(Base):
     __tablename__ = "usuario"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -20,20 +32,56 @@ class Usuario(Base):
     senha = Column(String, nullable=False)
     email = Column(String, nullable=False)
     idAdm = Column(Integer, ForeignKey('usuario.id')) # FOREIGN KEY(idAdm) references usuario(id)
+    permissoes = relationship("Permissao", secondary="usuario_permissao", backref=backref("usuarios"),
+                              collection_class=set)
 
     def __init__(self, *args, **kwargs):
-        self._filter = kwargs
+        self.__filter__ = kwargs
         # self._update = self.__dict__
-
         Base.__init__(self, *args, **kwargs)
 
     # adm = relationship("usuario", back_populates="usuario")
 
+    # static const filter attribute
+    def __eq__(self, obj):
+        return self.id == obj.id and self.__class__ == obj.__class__
+
+    def __hash__(self):
+        return self.id
+
+    def __repr__(self):
+        return "<{0}({1})>".format(type(self).__name__, self.id)
+
+    def __columns__(self, columns):
+        dic = {}
+        for attr, val in self.__dict__.items():
+            if attr in columns and val:
+                dic[attr] = val
+        return dic
+
+    @property
+    def _filter(self):
+        if not self.__dict__.get('__filter__'):
+            # self.__filter__ = {'id': self.id,
+            #                    'nome': self.nome,
+            #                    'login': self.login,
+            #                    'senha': self.senha,
+            #                    'email':self.email,
+            #                    'idAdm': self.idAdm}
+            self.__filter__ = self.__columns__(['id', 'nome', 'login', 'senha', 'email', 'idAdm'])
+
+        return self.__filter__
+    
+    # dynamic update filter
     @property
     def _update(self):
-        __update = self.__dict__.copy()
-        __update.pop('_sa_instance_state')
-        __update.pop('_filter')
+        # '''
+        # retorna os atributos atuais setados no obj.
+        # '''
+        # __update = self.__dict__.copy()
+        # __update.pop('_sa_instance_state')
+        # __update.pop('__filter__')
+        __update = self.__columns__(['nome', 'login', 'senha', 'email', 'idAdm'])
         return __update
 
     def serialize(self):
@@ -48,9 +96,6 @@ class Usuario(Base):
             'email': self.email,
             'id':    self.id
         }
-
-    def __repr__(self):
-        return str(self._filter)
 
     def logar(self, login, password):
         if self.login == login and self.senha == password:
@@ -84,6 +129,16 @@ class Permissao(Base):
     id = Column(Integer, primary_key=True, autoincrement=True)
     nivelRestricao = Column(Integer, nullable=False)
     arquivos = relationship("Arquivo", back_populates="permissao")
+    # usuarios = relationship("Usuario", secondary=usuario_permissao)
+
+    def __eq__(self, obj):
+        return self.id == obj.id and self.__class__ == obj.__class__
+
+    def __hash__(self):
+        return self.id
+
+    def __repr__(self):
+        return "<{0}({1})>".format(type(self).__name__, self.id)
 
     # arquivo = relationship("Arquivo", back_populates="permissao")
 # Arquivo.arquivoTags = relationship("ArquivoTags", order_by=ArquivoTags.idArquivo, back_populates="arquivo")
@@ -126,22 +181,23 @@ class Banco(Session):
         # recupera entidade usuário
         usuario = self.query(Usuario).filter_by(**usuario._filter).first()
         # init usuario para virar modelo
-        if usuario:
-            usuario = Usuario(id = usuario.id,
-                              login=usuario.login,
-                              nome=usuario.nome,
-                              email=usuario.email,
-                              senha=usuario.senha,
-                              idAdm=usuario.idAdm)
+        # if usuario:
+            # usuario = Usuario(id = usuario.id,
+            #                   login=usuario.login,
+            #                   nome=usuario.nome,
+            #                   email=usuario.email,
+            #                   senha=usuario.senha,
+            #                   idAdm=usuario.idAdm)
+            # usuario = Usuario(usuario.__dict__)
         return usuario
 
     def updateUsuario(self, usuario, **update):
         if not isinstance(usuario, Usuario):
             raise TypeError("Objeto passado não é da instância Usuario")
-
+        print(usuario._update)
         usuario = self.query(Usuario)\
             .filter_by(**usuario._filter)\
-            .update({**usuario._update}, synchronize_session=False)
+            .update(usuario._update, synchronize_session=False)
         self.commit()
         # usuario = Usuario(id=usuario.id,
         #                   login=usuario.login,
@@ -173,6 +229,28 @@ if __name__ == "__main__":
     # session.add(arquivo)
     # session.commit()
     # session.close()
-    b = Banco(engine)
-    print(b.query(Arquivo).all())
-    print(b)
+    from config import config
+    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+    usuario = Usuario(id=2)
+    usuario = banco.consultarUsuario(usuario)
+
+    usuario.nome = "nome"
+    # usuario.permissoes.add(Permissao(id=4, nivelRestricao=4))
+    # usuario.nome = 'testando20'
+
+    '''
+        quando troca o id do usuário o ORM substitui o id, mesmo com o filtro de update
+    '''
+    usuario = Usuario(id=2, nome="")
+    # print(usuario.permissoes)
+    banco.updateUsuario(usuario)
+    # usuario2 = banco.consultarUsuario(usuario)
+
+    # banco.salvarUsuario(usuario2)
+    # usuario3 = banco.consultarUsuario(usuario)
+    # print(usuario.usuario_permissao)
+    # print(usuario.Permissao)
+    # b = Banco(engine)
+    # print(b.query(Arquivo).all())
+    # print(b)
+    pass

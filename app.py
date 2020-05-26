@@ -96,9 +96,14 @@ def sair(username):
     session.clear()
     return redirect(url_for("login"))
 
-@app.route("/folder")
+@app.route("/teste")
 def teste():
-    return render_template("folder.html")
+    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+    usuario = Usuario(id=1)
+    usuario = banco.consultarUsuario(usuario)
+
+    return render_template("teste.html", teste=['a', 'b', 'c'])
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
