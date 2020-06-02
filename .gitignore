@@ -1,12 +1,9 @@
 sequencia_do_sistema.mdj
 home_lab_diagramas.mdj
 sequencia_do_sistema.mdj
-app.py~
 __pycache__/
-.app.py.un~
 static/css/home.css.old
 templates/home_old.html
-.ropeproject
-.idea
 bancos/*
-.gitmessage
+.*
+*~
