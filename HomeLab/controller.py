@@ -6,7 +6,8 @@ class Controller:
     def logar(form, session, banco):
         login = form.get('login')
         senha = form.get('senha')
-        usuario = banco.consultarUsuario(Usuario(login=login))
+        # usuario = banco.consultarUsuario(Usuario(login=login))
+        usuario = Usuario(login=login)(banco).find({'login': login})
 
         if session.get('usuario') or usuario.senha == senha:
             session['usuario'] = usuario.serialize()

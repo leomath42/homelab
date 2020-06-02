@@ -59,7 +59,7 @@ def signup():
 
 @app.route("/home/<username>", methods=['POST', 'GET'])
 def home(username):
-    if not session.get('usuario') or Usuario(**session.get('usuario')).nome != username:
+    if not session.get('usuario') or Usuario(**session.get('usuario')).login != username:
         abort(404)
     else:
         return render_template("home.html", username=username)
