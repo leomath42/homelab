@@ -59,27 +59,13 @@
                             <th scope="col">permissão</th>
                         </tr>
                         </tbody><tbody>
+                        {%for permissao in usuario.permissoes %}
                         <tr>
-                            <td>teste</td>
-                            <td>null</td>
-                            <td>null</td>
+                            <td>{{permissao.nome}}</td>
+                            <td>{{permissao.descricao}}</td>
+                            <td>{{permissao.nivelRestricao}}</td>
                         </tr>
-                        <tr>
-                            <td>teste</td>
-                            <td>null</td>
-                            <td>null</td>
-                        </tr>
-                        <tr>
-                            <td>teste</td>
-                            <td>null</td>
-                            <td>null</td>
-                        </tr>
-                        <tr>
-                            <td>teste</td>
-                            <td>null</td>
-                            <td>null</td>
-                        </tr>
-                    
+                        {%endfor%}
                         </tbody>
                     </table>
                 </div>

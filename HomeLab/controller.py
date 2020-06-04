@@ -1,4 +1,7 @@
 from HomeLab.Banco import *
+import os
+import sys
+
 
 class Controller:
 
@@ -29,12 +32,45 @@ class Controller:
         email = form.get('email')
         senha = form.get('senha')
 
-        usuario = banco.consultarUsuario(Usuario(id=id))
+        usuario = Usuario(id=id)(banco).find()
         usuario.email = email
         usuario.nome = nome
 
         if usuario.senha != senha:
             assert Exception("Senha não coincide")
         else:
-            # usuario_update = Usuario(id=id, login=login, email=email)
-            banco.updateUsuario(usuario)
+            usuario(banco).update()
+
+    @staticmethod
+    def infoFile(usuario, form, banco):
+        id_file = form.get('id')
+        arquivo = Arquivo(id=id_file)(banco).find()
+        if arquivo in usuario.arquivos:
+            return arquivo.serialize()
+    @staticmethod
+    def upload_file(files, form, session, banco):
+        usuario = Usuario(**session.get('usuario'))(banco).find()
+
+        values = files.getlist("fileUpload")
+        for file in values:
+            # verifica se o usuario esta upando um arquivo já existente no bd.
+            if True in [True for arquivo in usuario.arquivos if arquivo.nomeArquivo == file.filename]:
+                pass
+            else:
+                # Salva o Arquivo no /tmp
+                file.save('/tmp' + "/" + file.filename)
+                if (file.filename.find(".") != -1):
+                    tipo = file.filename.split(".")[1]
+                else:
+                    tipo = ""
+
+                # Cria um Arquivo no banco com as referências do Arquivo salvo em /tmp
+                arquivo = Arquivo(nomeArquivo=file.filename, path="/", tipoArquivo=tipo)
+                # Adiciona uma permissão default
+                arquivo.permissao = Permissao(id=1)(banco).find()  # permissao default
+                # Adiciona o arquivo ao usuario corrente(dono do arquivo)
+                usuario.arquivos.append(arquivo)
+                usuario(banco).update()  # update
+
+    def download_file(self):
+        pass

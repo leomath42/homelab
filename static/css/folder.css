@@ -47,3 +47,19 @@ td[data-type="col-opcao"]{
     height:auto;
 }
 
+/* modal style */
+.modal{
+    display: none; /*display:block*/
+    background: rgba(0, 0, 0, 0.5);
+}
+.modal-dialog{
+    top: 20vh;
+}
+
+.modal-content{
+    background: #343a40;
+}
+.close, .close:hover {
+    color: white;
+}
+/* modal style fim */

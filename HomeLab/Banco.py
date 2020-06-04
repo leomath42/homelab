@@ -105,6 +105,15 @@ class UsuarioPermissao(Base, Model):
 #     Column('idUsuario', Integer, ForeignKey("usuario.id"), primary_key=True),
 #     Column('idPermissao',Integer, ForeignKey("permissao.id"), primary_key=True)
 # )
+class UsuarioArquivo(Base, Model):
+    __tablename__ = "usuario_arquivo"
+    idUsuario = Column(Integer, ForeignKey("usuario.id"), primary_key=True)
+    idArquivo = Column(Integer, ForeignKey("arquivo.id"), primary_key=True)
+
+    # usuario = relationship("Usuario", backref="arquivo")
+    # arquivo = relationship("Arquivo", backref="usuario")
+
+
 class Usuario(Base, Model):
     __tablename__ = "usuario"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -115,6 +124,7 @@ class Usuario(Base, Model):
     idAdm = Column(Integer, ForeignKey('usuario.id'))  # FOREIGN KEY(idAdm) references usuario(id)
     permissoes = relationship("Permissao", secondary="usuario_permissao", backref=backref("usuarios"),
                               collection_class=set)
+    arquivos = relationship("Arquivo", secondary="usuario_arquivo", backref=backref("usuarios"))
 
     def __init__(self, *args, **kwargs):
         # self.__filter__ = kwargs
@@ -149,6 +159,13 @@ class Arquivo(Base, Model):
     permissao = relationship("Permissao", back_populates="arquivos")  # , uselist=True, collection_class=set)
     # arquivoTags = None
 
+    def serialize(self):
+        return {
+            'id': self.id,
+            'nome': self.nomeArquivo,
+            'path': self.path,
+            'tipo': self.tipoArquivo
+        }
 
 class ArquivoTags(Base, Model):
     __tablename__ = "arquivo_tags"
@@ -161,6 +178,8 @@ class ArquivoTags(Base, Model):
 class Permissao(Base, Model):
     __tablename__ = "permissao"
     id = Column(Integer, primary_key=True, autoincrement=True)
+    nome = Column(String, nullable=True)
+    descricao = Column(String, nullable=True)
     nivelRestricao = Column(Integer, nullable=False)
     arquivos = relationship("Arquivo", back_populates="permissao")
 
@@ -241,6 +260,30 @@ if __name__ == "__main__":
     from config import config
 
     banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-    usuario = Usuario(id=2)
-    usuario.nome = "testexxxxxxxxxxxxxxx"
-    banco.updateUsuario(usuario)
+    usuario = Usuario(id=1)(banco).find()
+    # print(usuario.arquivos)
+    # arq = Arquivo()
+    # arq.id=5
+    # arq.nomeArquivo='helloworld'
+    # arq.path='/tmp'
+    # arq.tipoArquivo='py'
+    # arq.permissao = Permissao(id=2)(banco).find()
+    # usuario.arquivos.append(arq)
+    # usuario(banco).update()
+    # arq = Arquivo(nomeArquivo='teste', path='/tmp', tipoArquivo='tipo')
+    # arq.permissao = Permissao(id=2)(banco).find()
+    # arq(banco).save()
+    # user = Usuario(nome="teste", login="testexxxx", senha="teste", email="teste")
+    # user(banco).save()
+    # arq = Arquivo(id=4, nomeArquivo='teste', path='/teste', tipoArquivo='txt')
+    # arq.permissao = Permissao(id=2)(banco).find()
+    #
+    # # arq(banco).save()
+    # usuario.arquivos.append(arq)
+    # usuario(banco).update()
+    # usuario.nome = "testexxxxxxxxxxxxxxx"
+    # banco.updateUsuario(usuario)
+    # permissao = Permissao(id=6)
+    # p = permissao(banco).find()
+    # print(p.__dict__)
+

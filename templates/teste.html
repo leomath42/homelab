@@ -8,5 +8,11 @@
     {% for i in teste %}
         {{i}}
     {%endfor%}
+    <form enctype="multipart/form-data" method="post">
+        <input type="file" name="file" id="file">
+        <button name='teste' value='teste' type="submit">upload</button>
+        <br>
+        <button name='download' value="download" type="submit">download</button>
+    </form>
 </body>
 </html>

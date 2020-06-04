@@ -3,7 +3,7 @@
 import json
 import os
 from flask import Flask, session, render_template, make_response
-from flask import request, redirect, url_for, abort
+from flask import request, redirect, url_for, abort, send_from_directory
 # from sqlalchemy.orm.scoping import scoped_session
 from HomeLab.Banco import *
 from HomeLab.config import config
@@ -35,8 +35,6 @@ def login():
             #resp.set_cookie('teste', "{'teste':'teste'}")
             return resp
 
-        else:
-            pass
     elif request.method == 'GET' and 'usuario' in session:
         # username = json.loads(session.get('usuario')).get('login')
         usuario = Usuario(**session.get('usuario'))
@@ -77,16 +75,19 @@ def commands():
             session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
             return "sair"
         elif data == "usuario":
-            usuario = Usuario(**session.get('usuario'))
+            usuario = Usuario(**session.get('usuario'))(banco).find()
             return render_template('user.html', usuario=usuario)
 
         elif data == "folder":
-            return render_template('folder.html')
+            usuario = Usuario(**session.get('usuario'))(banco).find()
+            return render_template('folder.html', arquivos=usuario.arquivos)
 
         elif data == "update_usuario":
             Controller.updateUser(form, banco)
             return render_template('user.html')
-
+        elif data == "info_file":
+            usuario = Usuario(**session.get('usuario'))(banco).find()
+            return Controller.infoFile(usuario, form, banco)
         else:
             return ""
     return render_template('index.html')
@@ -96,14 +97,35 @@ def sair(username):
     session.clear()
     return redirect(url_for("login"))
 
-@app.route("/teste")
+@app.route("/teste", methods=['GET', 'POST'])
 def teste():
     banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
     usuario = Usuario(id=1)
     usuario = banco.consultarUsuario(usuario)
-
+    if request.method == 'POST':
+        if request.form.get('teste') == 'teste':
+            file = request.files['file']
+            file.save('/tmp/upload_file.txt')
+        elif request.form.get('download') == 'download':
+            return redirect('/download/upload_file.png')
     return render_template("teste.html", teste=['a', 'b', 'c'])
 
+@app.route('/home/upload', methods=['POST'])
+def upload_file():
+    if request.method == 'POST':
+
+        # for file in request.files.values():
+        #     file.save('/tmp' + "/" + file.filename)
+        # return make_response("sucess")
+        banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+        form = request.form
+        files = request.files
+        Controller.upload_file(files, form, session, banco)
+        return make_response("sucess")
+
+@app.route('/home/download/<path:filename>')
+def download_file(filename):
+    return send_from_directory('/tmp', filename, as_attachment=True)
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
