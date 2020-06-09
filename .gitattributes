@@ -1,4 +1,4 @@
 static/js/bootstrap/* linguist-vendored
 static/css/* linguist-vendored
 templates/* linguist-vendored
-linguist-language=Python
+*.js linguist-language=Python
