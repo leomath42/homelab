@@ -10,6 +10,7 @@ from HomeLab import app
 
 banco = db
 
+
 # app.config["APPLICATION_ROOT"] = "/home/mohelot/projetos/home_lab/"
 # app.config["SESSION_COOKIE_PATH"] = "/home/mohelot/projetos/home_lab/"
 # app.config['SQLALCHEMY_DATABASE_URI'] = bind_name=config['engine_name']
@@ -17,8 +18,6 @@ banco = db
 # banco = db
 @app.route("/", methods=['GET', 'POST'])
 def login():
-    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-    login = password = None
 
     if request.method == 'POST':
         form = request.form
@@ -28,7 +27,7 @@ def login():
             usuario = Usuario(**session.get('usuario'))
             resp = make_response(redirect(url_for("home", username=usuario.login)))
             resp.set_cookie('usuario', json.dumps(usuario.serialize(), separators=(",", ":")))
-            #resp.set_cookie('teste', "{'teste':'teste'}")
+            # resp.set_cookie('teste', "{'teste':'teste'}")
             return resp
 
     elif request.method == 'GET' and 'usuario' in session:
@@ -51,6 +50,7 @@ def signup():
         banco.salvarUsuario(user)
     return render_template("signup.html")
 
+
 @app.route("/home/<username>", methods=['POST', 'GET'])
 def home(username):
     if not session.get('usuario') or Usuario(**session.get('usuario')).login != username:
@@ -58,17 +58,17 @@ def home(username):
     else:
         return render_template("home.html", username=username)
 
+
 @app.route("/home/commands", methods=['POST'])
 def commands():
     form = request.form
-    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
 
-    if not 'usuario' in session:
+    if 'usuario' not in session:
         abort(404)
     if request.method == 'POST':
         data = form.get("data")
         if data == "sair":
-            session.clear() # limpa a sessão atual, obrigando o usuário a logar novamente.
+            session.clear()  # limpa a sessão atual, obrigando o usuário a logar novamente.
             return "sair"
         elif data == "usuario":
             usuario = Usuario(**session.get('usuario'))(banco).find()
@@ -88,10 +88,12 @@ def commands():
             return ""
     return render_template('index.html')
 
-@app.route("/home/<username>/sair", methods=['GET','POST'])
+
+@app.route("/home/<username>/sair", methods=['GET', 'POST'])
 def sair(username):
     session.clear()
     return redirect(url_for("login"))
+
 
 @app.route("/teste", methods=['GET', 'POST'])
 def teste():
@@ -106,22 +108,23 @@ def teste():
             return redirect('/download/upload_file.png')
     return render_template("teste.html", teste=['a', 'b', 'c'])
 
+
 @app.route('/home/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
-
         # for file in request.files.values():
         #     file.save('/tmp' + "/" + file.filename)
         # return make_response("sucess")
-        # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
         form = request.form
         files = request.files
         Controller.upload_file(files, form, session, banco)
         return make_response("sucess")
 
+
 @app.route('/home/download/<path:filename>')
 def download_file(filename):
     return send_from_directory('/tmp', filename, as_attachment=True)
+
 
 if __name__ == '__main__':
     app.run(debug=True, host='0.0.0.0')
