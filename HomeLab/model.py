@@ -1,13 +1,12 @@
 #!/usr/bin/python3
 import sqlalchemy
-from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column, Integer, String, ForeignKey, Table, update
-from sqlalchemy.orm import relationship, sessionmaker, Session, backref
+from sqlalchemy.orm import relationship, backref
 from abc import ABC, abstractmethod
 import sys, os, traceback
+from sqlalchemy.orm import scoped_session
 
-engine = create_engine("sqlite:////home/mohelot/projetos/home_lab/bancos/homelab.db", echo=True)
 Base = declarative_base()
 
 
@@ -73,8 +72,8 @@ class Model(object):
         return "<{0}-(1)>".format(self.__class__, self.id)
 
     def __call__(self, session_object, *args, **kwargs):
-        assert isinstance(session_object, Banco)
-        assert isinstance(self, Base)
+        # assert isinstance(session_object, Banco)
+        # assert isinstance(self, Base)
         return Handler(self, session_object)
 
     def _filter(self):
@@ -198,7 +197,7 @@ class Permissao(Base, Model):
 #
 
 
-class Banco(Session):
+class DataBase(scoped_session):
     '''
     obs.: Talvez seja bom mudar os métodos para staticmethod ou classmethod
 
@@ -207,15 +206,16 @@ class Banco(Session):
 
     '''
 
-    def __init__(self, bind=None, bind_name=None, echo=True, *args, **kwargs):
+    def __init__(self, session_factory=None, *args, **kwargs):
         # self.bind = kwargs['engine']
-        if bind is None:
-            bind = create_engine(bind_name, echo=echo)  # return the engine
-        elif bind is None and bind_name is None:
-            raise AssertionError("bind parameter is None")
-
-        kwargs["bind"] = bind
-        super(Banco, self).__init__(*args, **kwargs)
+        # if bind is None:
+        #     bind = create_engine(bind_name, echo=echo)  # return the engine
+        # elif bind is None and bind_name is None:
+        #     raise AssertionError("bind parameter is None")
+        #
+        # kwargs["bind"] = bind
+        kwargs['session_factory'] = session_factory
+        super(DataBase, self).__init__(*args, **kwargs)
 
     def __repr__(self):
         return "<class '{0}' with id '{1}'>".format(self.__module__ + "." + self.__class__.__name__, id(self))
@@ -248,42 +248,10 @@ class Banco(Session):
         # self.execute(stmt)
         usuario(self).update()
 
+    # def __call__(self, *args, **kwargs):
+    #     # super(Banco, self).__call__(*args, **kwargs)
+    #     Session.__call__(*args, **kwargs)
+
 
 if __name__ == "__main__":
-    # Session = sessionmaker(bind=engine)
-    # Session.configure(bind=engine)
-    # session = Session()
-    # stmt = update(Usuario).where(Usuario.id == 2). \
-    #     values(nome='user #5')
-    # session.execute(stmt)
-    # session.commit()
-    from config import config
-
-    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-    usuario = Usuario(id=1)(banco).find()
-    # print(usuario.arquivos)
-    # arq = Arquivo()
-    # arq.id=5
-    # arq.nomeArquivo='helloworld'
-    # arq.path='/tmp'
-    # arq.tipoArquivo='py'
-    # arq.permissao = Permissao(id=2)(banco).find()
-    # usuario.arquivos.append(arq)
-    # usuario(banco).update()
-    # arq = Arquivo(nomeArquivo='teste', path='/tmp', tipoArquivo='tipo')
-    # arq.permissao = Permissao(id=2)(banco).find()
-    # arq(banco).save()
-    # user = Usuario(nome="teste", login="testexxxx", senha="teste", email="teste")
-    # user(banco).save()
-    # arq = Arquivo(id=4, nomeArquivo='teste', path='/teste', tipoArquivo='txt')
-    # arq.permissao = Permissao(id=2)(banco).find()
-    #
-    # # arq(banco).save()
-    # usuario.arquivos.append(arq)
-    # usuario(banco).update()
-    # usuario.nome = "testexxxxxxxxxxxxxxx"
-    # banco.updateUsuario(usuario)
-    # permissao = Permissao(id=6)
-    # p = permissao(banco).find()
-    # print(p.__dict__)
-
+    pass

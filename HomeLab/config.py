@@ -5,6 +5,6 @@
 
 config = \
 {
-    'engine_name' : "sqlite:////home/mohelot/projetos/home_lab/bancos/homelab.db",
+    'engine_name' : "sqlite:////home/mohelot/projetos/home_lab/bancos/homelab.db?check_same_thread=False",
     'engine_echo' : True
 }

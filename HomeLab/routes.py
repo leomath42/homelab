@@ -1,27 +1,23 @@
 #!/usr/bin/python3
-
 import json
-import os
-from flask import Flask, session, render_template, make_response
+from flask import session, render_template, make_response
 from flask import request, redirect, url_for, abort, send_from_directory
-# from sqlalchemy.orm.scoping import scoped_session
-from HomeLab.Banco import *
-from HomeLab.config import config
+from HomeLab.model import *
 from HomeLab.controller import Controller
+from HomeLab import database as db
 
-app = Flask(__name__)
-app.secret_key = os.urandom(16)
+from HomeLab import app
+
+banco = db
 
 # app.config["APPLICATION_ROOT"] = "/home/mohelot/projetos/home_lab/"
 # app.config["SESSION_COOKIE_PATH"] = "/home/mohelot/projetos/home_lab/"
-# print(app.config)
+# app.config['SQLALCHEMY_DATABASE_URI'] = bind_name=config['engine_name']
 
-banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-
+# banco = db
 @app.route("/", methods=['GET', 'POST'])
 def login():
-    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-    print(request.form)
+    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
     login = password = None
 
     if request.method == 'POST':
@@ -65,7 +61,7 @@ def home(username):
 @app.route("/home/commands", methods=['POST'])
 def commands():
     form = request.form
-    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
 
     if not 'usuario' in session:
         abort(404)
@@ -99,7 +95,7 @@ def sair(username):
 
 @app.route("/teste", methods=['GET', 'POST'])
 def teste():
-    banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
     usuario = Usuario(id=1)
     usuario = banco.consultarUsuario(usuario)
     if request.method == 'POST':
@@ -117,7 +113,7 @@ def upload_file():
         # for file in request.files.values():
         #     file.save('/tmp' + "/" + file.filename)
         # return make_response("sucess")
-        banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
+        # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
         form = request.form
         files = request.files
         Controller.upload_file(files, form, session, banco)

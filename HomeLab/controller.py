@@ -1,4 +1,4 @@
-from HomeLab.Banco import *
+from HomeLab.model import *
 import os
 import sys
 

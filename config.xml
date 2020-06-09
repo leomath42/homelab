@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<homelab>
+    <database name="homelab.db">
+        <path>"somewhere"</path>
+        <debug>false</debug>
+    </database>
+</homelab>

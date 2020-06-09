@@ -2,8 +2,8 @@ sequencia_do_sistema.mdj
 home_lab_diagramas.mdj
 sequencia_do_sistema.mdj
 __pycache__/
-static/css/home.css.old
-templates/home_old.html
+HomeLab/static/css/home.css.old
+HomeLab/templates/home_old.html
 bancos/*
 .*
 *~
