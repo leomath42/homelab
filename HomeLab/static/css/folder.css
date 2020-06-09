@@ -1,7 +1,8 @@
 .label-folder{
     font-size: 20px;
     color: #fff;
-    position: fixed;
+    position: relative;
+    vertical-align: bottom;
     padding: 10px 0 0 10px;
     /*vertical-align: bottom;*/
 }
@@ -63,3 +64,25 @@ td[data-type="col-opcao"]{
     color: white;
 }
 /* modal style fim */
+
+.table th{
+    position:sticky;
+    top:0;
+    background: #343a40;
+}
+.table-responsive{
+    overflow-y:auto;
+    max-height:430px;
+}
+::-webkit-scrollbar {
+  width: 2px;
+  left:0;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+  left:0;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+  left:0;
+}

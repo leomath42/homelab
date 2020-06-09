@@ -32,16 +32,13 @@ label {
     border: 2px solid #008000;
     text-align: center;
     outline: none;
-
-
     margin: auto;
     padding: 14px 10px;
-
     resize:both;
 
 }
 .box input:focus{
-    width: auto;
+    /*width: auto;*/
     margin-left: 0px;
     margin-right: 40px;
     border: 2px solid #0000FF;

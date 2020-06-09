@@ -39,14 +39,16 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-12">
+            <div class="table-responsive col-12">
                 <table class="table table-dark">
-                    <tbody>
-                        <th data-type="col-nome" scope="col">nome</th>
-                        <th data-type="col-data" scope="col">modificação</th>
-                        <th data-type="col-tamanho" scope="col">tamanho</th>
-<!--                        <th data-type="col-opcao" scope="col">op</th>-->
-                    </tbody>
+                    <thead class="">
+
+                            <th data-type="col-nome" scope="col">nome</th>
+                            <th data-type="col-data" scope="col">modificação</th>
+                            <th data-type="col-tamanho" scope="col">tamanho</th>
+
+                            <th data-type="col-opcao" scope="col"></th>
+                    </thead>
                     <tbody>
                         {%for arq in arquivos%}
                         <tr>
