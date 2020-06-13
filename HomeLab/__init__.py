@@ -18,3 +18,5 @@ from HomeLab.routes import *
 
 # app.config["APPLICATION_ROOT"] = "/home/mohelot/projetos/home_lab/"
 __all__ = ['model', 'config', 'controller', 'util']
+__version__ = 'v0.1.2'
+__author__ = "leomath42"

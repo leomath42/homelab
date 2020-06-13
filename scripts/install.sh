@@ -11,9 +11,10 @@ system_account=homelab
 # entra na pasta do script para fazer a instalação a partir de lá.
 dir=$(dirname $0)
 cd $dir
-cd ..
-header=$(python3 -c "import HomeLab; print(HomeLab.__name__ + ' ' + HomeLab.__version__)")
-cd -
+#cd ..
+#header=$(python3 -c "import HomeLab; print(HomeLab.__name__ + ' ' + HomeLab.__version__)")
+#cd -
+header="HomeLab v0.1.2"
 echo "[Instalação do projeto $header]"
 echo "As seguintes dependências serão instaladas:"
 echo "nginx, python3-venv, uwsgi, flask e sqlalchemy."
@@ -89,7 +90,7 @@ echo "nginx system user: "$user
 echo "adicionando nginx user($user) ao group homelab..."
 usermod -a -G homelab $user
 chown -R homelab:homelab /var/www/homelab
-chmod -R 660 /var/www/homelab
+#chmod -R 660 /var/www/homelab
 chmod 750 /var/www/homelab
 
 # cp as configurações do nginx.conf e homelab.conf
