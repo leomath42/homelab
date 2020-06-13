@@ -1,0 +1,21 @@
+# /etc/systemd/system/homelab.service
+#
+#
+#
+#
+
+[Unit]
+Description=Servidor uWSGI-HomeLab
+After=network.target
+
+[Service]
+Type=simple
+User=homelab
+Group=homelab
+WorkingDirectory=/var/www/homelab
+ExecStart=/var/www/homelab/env/bin/uwsgi --ini /var/www/homelab/uwsgi.ini
+ExecStop=/bin/kill -SIGINT $MAINPID
+TimeoutStopSec=5
+
+[Install]
+WantedBy=multi-user.target
