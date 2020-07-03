@@ -5,5 +5,6 @@ __pycache__/
 HomeLab/static/css/home.css.old
 HomeLab/templates/home_old.html
 bancos/*
+data/*
 .*
 *~
