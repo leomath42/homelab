@@ -20,47 +20,57 @@
 			background-size: cover;
 			background-repeat: no-repeat;
 		}
+		div #message-label{
+			display:none;
+			word-wrap: break-word;
+		}
 	</style>
 </head>
-<body class="bg-dark text-white">
-		<div class="container-fluid align-items-end  h-100" style="margin-top: 95px;">
-<!--			{%print teste %}-->
-			<div class="center">
-			<div class="row justify-content-center align-items-center"><h1>HomeLab</h1></div>
-			<form method="post">
-				<div class="box">
-				<div class="row justify-content-center align-items-center"><h1>Cadastro</h1></div>
-				<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--					<div class="col-1 text-right"><label class="col-form-label">Login:</label></div>-->
-					<div class="col-12">
-					<input class="form-control" name="login" placeholder="Login">
-					</div>
-				</div>
-				<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--					<div class="col-1 text-right"><label class="col-form-label">E-mail:</label></div>-->
-					<div class="col-12">
-					<input class="form-control" name="email" placeholder="E-mail">
-					</div>
-				</div>
-				<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--					<div class="col-1 text-right"><label class="col-form-label">Password:</label></div>-->
-					<div class="col-12">
-						<input type="password" class="form-control" name="password" placeholder="Password">
-					</div>
-				</div>
-				<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--					<div class="col-1 text-right"><label class="col-form-label">Re-Password:</label></div>-->
-					<div class="col-12">
-						<input type="password" class="form-control" name="re-password" placeholder="Re-Password">
-					</div>
-				</div>
-				<div class="row p-1 m-1 justify-content-center align-items-center">
-					<div class="col-6"><button type="submit" class="btn btn-primary">confirmar</button></div>
-					<div class="col-6"><a type="submit" class="btn btn-secondary" href="/">Login</a></div>
-				</div>
-			</form>
-		</div>
-		</div>
-		</div>
-	</body>
+<body>
+<form action="" method="post">
+    <div data-type="principal" class="conteiner w-100 h-100 d-flex d-flex justify-content-center align-items-center">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-center">
+                <div class="conteiner">
+                    <h1 class="d-flex justify-content-center text-white">HomeLab</h1>
+                    <div id="message" class="">
+                        <div id="message-label" class="message-label alert alert-danger" role="alert">
+                            Usuário já existente, por favor, utilize outro login
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+                <input class="form-control" name="login" placeholder="Login" value="{{form['login']}}">
+                <input class="form-control" name="email" placeholder="E-mail" value="{{form['email']}}">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                <input type="password" class="form-control" name="re-password" placeholder="Confirm">
+                <div class="d-flex justify-content-end">
+                    <button data-type="login" type="submit" class="btn btn-primary">sign up</button>
+                </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center">
+            <label data-type="footer" href="#" class="text-white">have account?</label><a data-type="footer" href="/">go to login</a>
+            </div>
+            <a data-type="footer" href="#" class="d-flex justify-content-center">Forgot your password?</a>
+        </div>
+    </div>
+    </div>
+</form>
+</body>
 </html>
+
+<script type="text/javascript">
+		var message = "{{message}}"
+		if(message != ""){
+			//alert(message);
+			var aux = document.getElementById("message-label");
+			aux.style.display = "block";
+			//var label = document.createElement("label");
+			aux.innerText = message;
+			aux.replaceWith(aux);
+		}
+</script>

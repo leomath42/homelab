@@ -2,10 +2,10 @@
 <html lang="pt-br" dir="ltr">
 
 	<head>
-    	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-<!--		<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">-->
-<!--		<link rel="stylesheet" href="static/css/home.css">-->
+	<!--		<link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">-->
+	<!--		<link rel="stylesheet" href="static/css/home.css">-->
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>home lab</title>
@@ -14,12 +14,12 @@
 		<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-<!--		<script src="static/js/bootstrap/bootstrap.min.js"></script>-->
+	<!--		<script src="static/js/bootstrap/bootstrap.min.js"></script>-->
 		<script type = "text/javascript" src='/static/hello.js' ></script>
 		<link rel="stylesheet" href="/static/css/login.css" >
 
 		<style>
-           body{
+		   body{
 			background-image: url({{ url_for('static', filename="images/code.jpg") }});
 			/*background-image:linear-gradient(#55adbb, #addeb8);*/
 			background-color: #cccccc;
@@ -30,41 +30,53 @@
 			height: 100%
 		}
 
-       </style>
+	   </style>
 	</head>
-	<body class="text-white teste">
-		<form method="post" class="">
-		<div class="center">
-		<div class="row justify-content-center align-items-center">
-				<h1>HomeLab</h1>
-		</div>
-		<div class="container box justify-content-center p-12">
-			<div class="row justify-content-center align-items-center">
-				<h1>Login</h1>
-			</div>
-			<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--				<div class="col-2"><label class="col-form-label">Login:</label></div>-->
-				<div class="col-12">
-				<input class="form-control" name="login" id="login" placeholder="Login">
-				</div>
-			</div>
-			<div class="row p-1 m-1 justify-content-center align-items-center">
-<!--				<div class="col-2"><label class="col-form-label">Password:</label></div>-->
-				<div class="col-12">
-					<input type="password" class="form-control" name="senha" placeholder="Senha">
-				</div>
-			</div>
-			<div class="row px-auto mx-auto">
-				<div class="col-6 "><button type="submit" class="btn btn-primary">confirmar</button></div>
-				<!--<div class="col-2"><button type="submit" class="btn btn-secondary">register</button></div>-->
-				<div class="col-6"><a type="submit" class="btn btn-secondary" href="/signup">signup</a></div>
-			</div>
-
-		</div>
-		</div>
-		</form>
-	</body>
-
+<form action="" method="post">
+    <div data-type="principal" class="conteiner w-100 h-100 d-flex d-flex justify-content-center align-items-center">
+    <div class="card">
+        <div class="card-header">
+            <div class="d-flex justify-content-center">
+                <div class="conteiner">
+                    <h1 class="d-flex justify-content-center text-white">HomeLab</h1>
+                    <div id="message" class="">
+                        <div id="message-label" class="message-label alert alert-danger" role="alert">
+                            Usuário já existente, por favor, utilize outro login
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-body">
+                <input class="form-control" name="login" placeholder="Login" value="">
+                <input type="password" class="form-control" name="password" placeholder="Password">
+                <div class="d-flex justify-content-between">
+                    <div class="">
+                        <input type="checkbox"> <label class="text-white">save login</label>
+                    </div>
+                    <button data-type="login" type="submit" class="btn btn-primary">login</button>
+                </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-center">
+            <label data-type="footer" href="#" class="text-white">don't have account?</label><a data-type="footer" href="/signup">go to signup</a>
+            </div>
+            <a data-type="footer" href="#" class="d-flex justify-content-center">Forgot your password?</a>
+        </div>
+    </div>
+    </div>
+</form>
+</body>
 </html>
 
-
+<script type="text/javascript">
+		var message = "{{message}}"
+		if(message != ""){
+			//alert(message);
+			var aux = document.getElementById("message-label");
+			aux.style.display = "block";
+			//var label = document.createElement("label");
+			aux.innerText = message;
+			aux.replaceWith(aux);
+		}
+</script>

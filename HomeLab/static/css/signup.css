@@ -11,10 +11,10 @@
     left: 50%;
     transform: translate(-50%, -50%);
 }
-label {
+/*label {
   padding: 12px 12px 12px 0;
   display: inline-block;
-}
+}*/
 .box {
   width: 300px;
   border: 5px solid;
@@ -51,4 +51,42 @@ label {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.box {
+  width: 300px;
+  border: 5px solid;
+  border-color: #407e96;
+  border-radius: 24px;
+  padding: 40px;
+
+  background: #191919;
+  text-align: center;
+}
+.card {
+    background: rgba(35, 35, 46, 0.8);
+    border: 3px;
+    font-style: white;
+    width: 400px;
+    min-height: 380px;
+}
+.conteiner[data-type='principal']{
+    margin-top: 50px;
+}
+.form-control{
+    margin-top: 10px;
+    border-color:#407e96;
+}
+button[data-type='login']{
+    margin-top: 10px;
+}
+label[data-type="footer"]{
+    margin:unset;
+}
+a[data-type="footer"]{
+    margin-left:5px;
+}
+div #message-label{
+    display:none;
+    word-wrap: break-word;
 }

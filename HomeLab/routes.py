@@ -18,18 +18,18 @@ banco = db
 # banco = db
 @app.route("/", methods=['GET', 'POST'])
 def login():
-
     if request.method == 'POST':
         form = request.form
 
         if Controller.logar(form, session, banco):
-            # session["usuario"] = json.dumps(usuario.serialize())
             usuario = Usuario(**session.get('usuario'))
-            resp = make_response(redirect(url_for("home", username=usuario.login)))
-            resp.set_cookie('usuario', json.dumps(usuario.serialize(), separators=(",", ":")))
-            # resp.set_cookie('teste', "{'teste':'teste'}")
-            return resp
-
+            response = make_response(redirect(url_for("home", username=usuario.login)))
+            response.set_cookie('usuario', json.dumps(usuario.serialize(), separators=(",", ":")))
+            return response
+        else:
+            template = render_template("login.html", message="senha incorreta ou usuário inexistente.")
+            response = make_response(template)
+            return response
     elif request.method == 'GET' and 'usuario' in session:
         # username = json.loads(session.get('usuario')).get('login')
         usuario = Usuario(**session.get('usuario'))
@@ -47,8 +47,18 @@ def signup():
         password = form['password']
         re_password = form['re-password']
         user = Usuario(login=login, nome=login, email=email, senha=password)
-        banco.salvarUsuario(user)
-    return render_template("signup.html")
+        try:
+            banco.salvarUsuario(user)
+        except:
+            pass
+        finally:
+            template = render_template("signup.html", form=form,
+                                       message="Usuário já existente, por favor, utilize outro login")
+            response = make_response(template)
+            response.headers['response'] = "error"
+            return response
+
+    return render_template("signup.html", form="")
 
 
 @app.route("/home/<username>", methods=['POST', 'GET'])
@@ -95,26 +105,12 @@ def sair(username):
     return redirect(url_for("login"))
 
 
-@app.route("/teste", methods=['GET', 'POST'])
-def teste():
-    # banco = Banco(bind_name=config['engine_name'], echo=config['engine_echo'])
-    usuario = Usuario(id=1)
-    usuario = banco.consultarUsuario(usuario)
-    if request.method == 'POST':
-        if request.form.get('teste') == 'teste':
-            file = request.files['file']
-            file.save('/tmp/upload_file.txt')
-        elif request.form.get('download') == 'download':
-            return redirect('/download/upload_file.png')
-    return render_template("teste.html", teste=['a', 'b', 'c'])
-
-
 @app.route('/home/upload', methods=['POST'])
 def upload_file():
     if request.method == 'POST':
         # for file in request.files.values():
         #     file.save('/tmp' + "/" + file.filename)
-        # return make_response("sucess")
+        # return make_response("sucess")            # session["usuario"] = json.dumps(usuario.serialize())
         form = request.form
         files = request.files
         Controller.upload_file(files, form, session, banco)
@@ -123,7 +119,9 @@ def upload_file():
 
 @app.route('/home/download/<path:filename>')
 def download_file(filename):
-    return send_from_directory('/tmp', filename, as_attachment=True)
+    # send_from_directory é uma função para download de arquivos do Flask
+    response = Controller.download_file(filename, send_from_directory, session, banco)
+    return response
 
 
 if __name__ == '__main__':

@@ -1,4 +1,5 @@
 from HomeLab.model import *
+from HomeLab.config import config
 import os
 import sys
 
@@ -8,11 +9,14 @@ class Controller:
     @staticmethod
     def logar(form, session, banco):
         login = form.get('login')
-        senha = form.get('senha')
+        senha = form.get('password')
         # usuario = banco.consultarUsuario(Usuario(login=login))
         usuario = Usuario(login=login)(banco).find({'login': login})
 
-        if session.get('usuario') or usuario.senha == senha:
+        if not usuario:
+            return False
+
+        elif session.get('usuario') or usuario.senha == senha:
             session['usuario'] = usuario.serialize()
             return True
         # elif not usuario:
@@ -58,8 +62,9 @@ class Controller:
                 pass
             else:
                 # Salva o Arquivo no /tmp
-                file.save('/tmp' + "/" + file.filename)
-                if (file.filename.find(".") != -1):
+                file.save(os.path.join(config['data_path'], file.filename))
+
+                if file.filename.find(".") != -1:
                     tipo = file.filename.split(".")[1]
                 else:
                     tipo = ""
@@ -72,5 +77,10 @@ class Controller:
                 usuario.arquivos.append(arquivo)
                 usuario(banco).update()  # update
 
-    def download_file(self):
-        pass
+    @staticmethod
+    def download_file(filename, downloadFunction, session, banco):
+        #   verificar se o usuário possui permissão para fazer download
+        #   e se possui permissão para fazer download do arquivo passado.
+        #
+        file = downloadFunction(config['data_path'], filename , as_attachment=True)
+        return file

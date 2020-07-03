@@ -8,5 +8,6 @@ dir = os.getcwd()
 config = \
 {
     'engine_name' : "sqlite:////"+ dir +"/bancos/homelab.db?check_same_thread=False",
-    'engine_echo' : True
+    'engine_echo' : True,
+    'data_path': os.path.join(dir, "data")
 }
