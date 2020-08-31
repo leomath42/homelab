@@ -1,96 +1,32 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-       <!--<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"> -->
-       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
-       <script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <title>Menu Inicial</title>
+           <link rel="stylesheet" href="/static/css/home.css">
+       <link rel="stylesheet" href="/static/css/folder.css">
+        <script type = "text/javascript" src = "{{ url_for('static', filename = 'hello.js') }}" ></script>
        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/home.js') }}" ></script>
        <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/folder.js') }}" ></script>
-       <script type="text/javascript" src="/static/js/jquery/jquery-3.5.0.min.js"/>
-       <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"/>
-       <script type="text/javascript"src="/static/js/bootstrap/bootstrap.min.js"></script>
-       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-       <script>
+<!--       <script type="text/javascript" src="/static/js/jquery/jquery-3.5.0.min.js"/>-->
+<!--       <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"/>-->
+<!--       <script type="text/javascript"src="/static/js/bootstrap/bootstrap.min.js"></script>-->
+
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery/jquery-3.5.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/bootstrap/bootstrap.min.css')}}">
 
 
-        $( document ).ajaxSend(function() {
-          $( ".log" ).text( "Triggered ajaxSend handler." );
-        });
-        $( ".trigger" ).click(function() {
-          alert("teste");
-        });
-       </script>
-
-       <link rel="stylesheet" href="/static/css/home.css">
-       <link rel="stylesheet" href="/static/css/folder.css">
 </head>
-<body style="background: #433f54;">
+<body>
     <div class="conteiner" style="">
         <div class="row" style="">
-            <nav data-type="navbar" class="col-2 col-md-2">
-                <ul data-type="navbar" class="navbar-nav">
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#"  onclick="folder();" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="search" class="svg-inline--fa fa-search fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Pesquisar</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="images" class="svg-inline--fa fa-images fa-w-18" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><path class="fa-secondary" fill="currentColor" d="M480 416v16c0 26.51-21.49 48-48 48H48c-26.51 0-48-21.49-48-48V176c0-26.51 21.49-48 48-48h16v208c0 44.112 35.888 80 80 80h336zm96-80V80c0-26.51-21.49-48-48-48H144c-26.51 0-48 21.49-48 48v256c0 26.51 21.49 48 48 48h384c26.51 0 48-21.49 48-48zM256 128c0 26.51-21.49 48-48 48s-48-21.49-48-48 21.49-48 48-48 48 21.49 48 48zm-96 144l55.515-55.515c4.686-4.686 12.284-4.686 16.971 0L272 256l135.515-135.515c4.686-4.686 12.284-4.686 16.971 0L512 208v112H160v-48z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Imagens</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="microchip" class="svg-inline--fa fa-microchip fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M416 48v416c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V48c0-26.51 21.49-48 48-48h224c26.51 0 48 21.49 48 48zm96 58v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42V88h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zM30 376h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Dispositivos</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="print" class="svg-inline--fa fa-print fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M448 192V77.25c0-8.49-3.37-16.62-9.37-22.63L393.37 9.37c-6-6-14.14-9.37-22.63-9.37H96C78.33 0 64 14.33 64 32v160c-35.35 0-64 28.65-64 64v112c0 8.84 7.16 16 16 16h48v96c0 17.67 14.33 32 32 32h320c17.67 0 32-14.33 32-32v-96h48c8.84 0 16-7.16 16-16V256c0-35.35-28.65-64-64-64zm-64 256H128v-96h256v96zm0-224H128V64h192v48c0 8.84 7.16 16 16 16h48v96zm48 72c-13.25 0-24-10.75-24-24 0-13.26 10.75-24 24-24s24 10.74 24 24c0 13.25-10.75 24-24 24z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Imprimir</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="download" class="svg-inline--fa fa-download fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M216 0h80c13.3 0 24 10.7 24 24v168h87.7c17.8 0 26.7 21.5 14.1 34.1L269.7 378.3c-7.5 7.5-19.8 7.5-27.3 0L90.1 226.1c-12.6-12.6-3.7-34.1 14.1-34.1H192V24c0-13.3 10.7-24 24-24zm296 376v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h146.7l49 49c20.1 20.1 52.5 20.1 72.6 0l49-49H488c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Download</span>
-                       </a>
-
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="upload" class="svg-inline--fa fa-upload fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M296 384h-80c-13.3 0-24-10.7-24-24V192h-87.7c-17.8 0-26.7-21.5-14.1-34.1L242.3 5.7c7.5-7.5 19.8-7.5 27.3 0l152.2 152.2c12.6 12.6 3.7 34.1-14.1 34.1H320v168c0 13.3-10.7 24-24 24zm216-8v112c0 13.3-10.7 24-24 24H24c-13.3 0-24-10.7-24-24V376c0-13.3 10.7-24 24-24h136v8c0 30.9 25.1 56 56 56h80c30.9 0 56-25.1 56-56v-8h136c13.3 0 24 10.7 24 24zm-124 88c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20zm64 0c0-11-9-20-20-20s-20 9-20 20 9 20 20 20 20-9 20-20z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Upload</span>
-                       </a>
-                   </li>
-
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#"  onclick="usuario();" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="user" class="svg-inline--fa fa-user fa-w-14" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><path class="fa-secondary" fill="currentColor" d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Usuário</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="#" class="nav-link">
-                           <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="cog" class="svg-inline--fa fa-cog fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M487.4 315.7l-42.6-24.6c4.3-23.2 4.3-47 0-70.2l42.6-24.6c4.9-2.8 7.1-8.6 5.5-14-11.1-35.6-30-67.8-54.7-94.6-3.8-4.1-10-5.1-14.8-2.3L380.8 110c-17.9-15.4-38.5-27.3-60.8-35.1V25.8c0-5.6-3.9-10.5-9.4-11.7-36.7-8.2-74.3-7.8-109.2 0-5.5 1.2-9.4 6.1-9.4 11.7V75c-22.2 7.9-42.8 19.8-60.8 35.1L88.7 85.5c-4.9-2.8-11-1.9-14.8 2.3-24.7 26.7-43.6 58.9-54.7 94.6-1.7 5.4.6 11.2 5.5 14L67.3 221c-4.3 23.2-4.3 47 0 70.2l-42.6 24.6c-4.9 2.8-7.1 8.6-5.5 14 11.1 35.6 30 67.8 54.7 94.6 3.8 4.1 10 5.1 14.8 2.3l42.6-24.6c17.9 15.4 38.5 27.3 60.8 35.1v49.2c0 5.6 3.9 10.5 9.4 11.7 36.7 8.2 74.3 7.8 109.2 0 5.5-1.2 9.4-6.1 9.4-11.7v-49.2c22.2-7.9 42.8-19.8 60.8-35.1l42.6 24.6c4.9 2.8 11 1.9 14.8-2.3 24.7-26.7 43.6-58.9 54.7-94.6 1.5-5.5-.7-11.3-5.6-14.1zM256 336c-44.1 0-80-35.9-80-80s35.9-80 80-80 80 35.9 80 80-35.9 80-80 80z"></path></svg>
-                           <span class="d-none d-lg-inline-block">Configurações</span>
-                       </a>
-                   </li>
-                   <li class="nav-item  px-2 py-2 py-md-2 px-md-2 py-lg-2 px-lg-2 text-nowrap text-nowrap">
-                       <a href="/home/{{username}}/sair" onclick="" id="sair" value="sair2" name="sair2" class="nav-link">
-                            <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="sign-out-alt" class="svg-inline--fa fa-sign-out-alt fa-w-16 fa-2x" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path class="fa-secondary" fill="currentColor" d="M497 273L329 441c-15 15-41 4.5-41-17v-96H152c-13.3 0-24-10.7-24-24v-96c0-13.3 10.7-24 24-24h136V88c0-21.4 25.9-32 41-17l168 168c9.3 9.4 9.3 24.6 0 34zM192 436v-40c0-6.6-5.4-12-12-12H96c-17.7 0-32-14.3-32-32V160c0-17.7 14.3-32 32-32h84c6.6 0 12-5.4 12-12V76c0-6.6-5.4-12-12-12H96c-53 0-96 43-96 96v192c0 53 43 96 96 96h84c6.6 0 12-5.4 12-12z"></path></svg>
-                            <span class="d-none d-lg-inline-block">Sair</span>
-                       </a>
-                   </li>
-                </ul>
-            </nav>
+            {% include 'menu.html' %}
             <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
-
+                    menu inicial
             </main>
         </div>
     </div>
-
 </body>
 </html>

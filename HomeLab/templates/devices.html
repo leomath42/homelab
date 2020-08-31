@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery/jquery-3.5.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/bootstrap/bootstrap.min.css')}}">
+
+    <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/home.js') }}" ></script>
+    <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/devices.js') }}" ></script>
+    <link rel="stylesheet" href="/static/css/devices.css"/>
+
+    <title>devices</title>
+</head>
+<body style="background: #433f54;">
+    <div class="conteiner" style="">
+        <div class="row" style="">
+            {% include 'menu.html' %}
+            <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
+                    <div class="card bg-dark">
+                        <div class="card-header">
+                            <form class="conteiner w-100 h-100" method="post">
+                            <div class="row">
+                                <div class="col">
+                                <label class="text-white"> Adicione um novo dispositivo: </label>
+                                <button class="btn btn-primary">
+                                    <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="microchip" class="svg-inline--fa fa-microchip fa-w-16" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><path fill="currentColor" d="M416 48v416c0 26.51-21.49 48-48 48H144c-26.51 0-48-21.49-48-48V48c0-26.51 21.49-48 48-48h224c26.51 0 48 21.49 48 48zm96 58v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42V88h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zm0 96v12a6 6 0 0 1-6 6h-18v6a6 6 0 0 1-6 6h-42v-48h42a6 6 0 0 1 6 6v6h18a6 6 0 0 1 6 6zM30 376h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6zm0-96h42v48H30a6 6 0 0 1-6-6v-6H6a6 6 0 0 1-6-6v-12a6 6 0 0 1 6-6h18v-6a6 6 0 0 1 6-6z"></path></svg>
+                                </button>
+                                    </div>
+                            </div>
+                            <div class="row">
+                                    <div class="col-12 col-md-4">
+                                        <select class="form-control" id="device-type" name="device_type">
+                                            <option value="switch-plug">switch or plug</option>
+                                            <option value="sensor">sensor</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+                                        <select class="form-control" id="device-button-type" name="device_button_type">
+                                            <option value="switch-plug">simple button to on/off</option>
+                                            <option value="sensor">switch to on/off</option>
+                                            <option value="graphic">a sensor graphic</option>
+                                            <option value="label">a sensor label</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-md-4">
+
+                                        <input class="form-control" placeholder="descriptor" name="descriptor">
+                                        </div>
+                                    <div class="col-12 col-md-4">
+                                        <select id="connect_type" class="form-control" name="connect_type" onchange="select_connect_type();">
+                                            <option value="lan">lan(local area network)</option>
+                                            <option value="serial">usb/serial</option>
+                                        </select>
+                                    </div>
+                                    <div id="lan-address" class="col-12 col-md-4">
+                                        <input class="form-control" placeholder="address" name="address">
+                                    </div>
+                                    <div id="lan-port" class="col-12 col-md-4">
+                                        <input class="form-control" placeholder="port"    name="port">
+                                    </div>
+                                    <div id="serial" class="col-12 col-md-4">
+                                        <input class="form-control" placeholder="serial" name="serial">
+                                    </div>
+                            </div>
+                            </form>
+                        </div>
+                        <div class="card-body">
+                            <!-- usa uma lista de devices -->
+                            {% include "device_template.html" ignore missing %}
+                        </div>
+                        <div class="card-footer">
+
+                        </div>
+                    </div>
+
+            </main>
+        </div>
+    </div>
+</body>
+</html>

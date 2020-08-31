@@ -1,0 +1,1 @@
+{"11": {"descriptor": "FFFFF", "connect_type": "lan", "address": "127.0.0.1", "port": "5050", "serial": ""}, "15": {"descriptor": "ZZZZZZZZZZZZ", "connect_type": "lan", "address": "127.0.0.1", "port": "5050", "serial": ""}, "16": {"descriptor": "ZZZZZZZZZZZZ", "connect_type": "serial", "address": "", "port": "", "serial": "/dev/ttyACM1"}}

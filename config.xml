@@ -1,7 +1,43 @@
-<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0"?>
 <homelab>
-    <database name="homelab.db">
-        <path>"somewhere"</path>
-        <debug>false</debug>
-    </database>
+	<Config>
+		<databaseName value='homelab.db' databaseType='sqlite'/>
+		<databaseType value='sqlite'/>
+	</Config>
+	<Device name="quarto">
+		<id value='1'/>
+		<descriptor value='FFFF'/>
+		<connect_type value='serial'/>
+		<address value=''/>
+		<port value=''/>
+		<serial_port value='/dev/ttyACM0'/>
+		<max_block_message value='32'/>
+		
+		<receive value=''/>
+		<send value=''/>
+	</Device>
+	<Device name="escada">
+		<id value='2'/>
+		<descriptor value='EEEE'/>
+		<connect_type value='inet'/>
+		<address value='127.0.0.1'/>
+		<port value='5050'/>
+		<serial_port value=''/>
+		<max_block_message value='32'/>
+
+		<receive value=''/>
+		<send value=''/>
+	</Device>
+	<Printer>
+		<id value='1'/>
+		<host value='localhost'/>
+		<printerName value='printer'/>
+		<commandFormat value='command = lp -h {0} -d {1} {2}'/>
+		<message value="testando uma mensagem grande demais só pra testar algo aqui"/>
+	</Printer>
+	<Printer>
+	</Printer>
+	<Teste>
+	</Teste>
+	<DeviceTemplate _id='1' id='Device-1' type='button' class="device-button btn btn-primary" />
 </homelab>

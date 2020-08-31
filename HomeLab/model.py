@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import sqlalchemy
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, ForeignKey, Table, update
+from sqlalchemy import Column, Integer, String, REAL, BLOB, ForeignKey, Table, update
 from sqlalchemy.orm import relationship, backref
 from abc import ABC, abstractmethod
 import sys, os, traceback
@@ -30,10 +30,10 @@ class Handler(object):
 
     def update(self):
         if self.entity.id:
-            entity = self.session.query(self.entity.__class__).filter_by(**{'id':self.entity.id}).update(
+            entity = self.session.query(self.entity.__class__).filter_by(**{'id': self.entity.id}).update(
                 self.entity._filter())#._Model__filter(
             self.session.commit()
-            return entity
+            return self.entity
         else:
             raise Exception("{0} doesn't have id, cannot update".format(self.entity))
 
@@ -69,7 +69,7 @@ class Model(object):
         super(Model, self).__setattr__(key, value)
 
     def __repr__(self):
-        return "<{0}-(1)>".format(self.__class__, self.id)
+        return "<{0}-{1}>".format(self.__class__, self.id)
 
     def __call__(self, session_object, *args, **kwargs):
         # assert isinstance(session_object, Banco)
@@ -113,6 +113,12 @@ class UsuarioArquivo(Base, Model):
     # arquivo = relationship("Arquivo", backref="usuario")
 
 
+class UsuarioDispositivo(Base, Model):
+    __tablename__ = "usuario_dispositivo"
+    idUsuario = Column(Integer, ForeignKey("usuario.id"), primary_key=True)
+    idDispositivo = Column(Integer, ForeignKey("dispositivo.id"), primary_key=True)
+
+
 class Usuario(Base, Model):
     __tablename__ = "usuario"
     id = Column(Integer, primary_key=True, autoincrement=True)
@@ -124,6 +130,8 @@ class Usuario(Base, Model):
     permissoes = relationship("Permissao", secondary="usuario_permissao", backref=backref("usuarios"),
                               collection_class=set)
     arquivos = relationship("Arquivo", secondary="usuario_arquivo", backref=backref("usuarios"))
+
+    dispositivos = relationship("Dispositivo", secondary="usuario_dispositivo", backref=backref("usuarios"))
 
     def __init__(self, *args, **kwargs):
         # self.__filter__ = kwargs
@@ -152,6 +160,8 @@ class Arquivo(Base, Model):
     nomeArquivo = Column(String, nullable=False)
     path = Column(String, nullable=False)
     tipoArquivo = Column(String, nullable=False)
+    size = Column(String, nullable=True)
+    time = Column(REAL, nullable=True)
     idPermissao = Column(Integer, ForeignKey("permissao.id"),
                          nullable=False)  # FOREIGN KEY(idPermissao) references permissao(id)
     arquivo_tags = relationship("ArquivoTags", back_populates="arquivo")
@@ -163,7 +173,9 @@ class Arquivo(Base, Model):
             'id': self.id,
             'nome': self.nomeArquivo,
             'path': self.path,
-            'tipo': self.tipoArquivo
+            'tipo': self.tipoArquivo,
+            'size': self.size,
+            'time': self.time
         }
 
 class ArquivoTags(Base, Model):
@@ -186,6 +198,21 @@ class Permissao(Base, Model):
 
     # arquivo = relationship("Arquivo", back_populates="permissao")
 
+
+class Dispositivo(Base, Model):
+    __tablename__ = "dispositivo"
+    id = Column(Integer, primary_key=True, autoincrement=True)
+    funcao = Column(Integer, nullable=False)
+    idPermissao = Column(Integer,  ForeignKey("permissao.id"), nullable=False)
+    template = Column(String, nullable=False)
+
+    def serialize(self):
+        return {
+            'id': self.id,
+            'funcao': self.funcao,
+            'idPermissao': self.idPermissao,
+            'template': self.template
+        }
 
 # Arquivo.arquivoTags = relationship("ArquivoTags", order_by=ArquivoTags.idArquivo, back_populates="arquivo")
 # class UsuarioArquivo(Base):
@@ -252,6 +279,9 @@ class DataBase(scoped_session):
     #     # super(Banco, self).__call__(*args, **kwargs)
     #     Session.__call__(*args, **kwargs)
 
+__all__ = ['DataBase', 'Dispositivo', 'Usuario', 'UsuarioArquivo', 'UsuarioDispositivo',
+           'UsuarioPermissao', 'Arquivo', 'ArquivoTags', 'Base', 'Model', 'Permissao',
+           'Handler']
 
 if __name__ == "__main__":
     pass

@@ -14,6 +14,8 @@ create table dispositivo(
     idPermissao INTEGER NOT NULL,
     FOREIGN KEY(idPermissao) references permissao(id)
 );
+-- coluna de templates.
+alter table dispositivo add column template TEXT NOT NULL DEFAULT "";
 
 create table arquivo(
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +23,8 @@ create table arquivo(
     path TEXT NOT NULL,
     tipoArquivo TEXT NULL,
     idPermissao INTEGER NOT NULL,
+    size TEXT NULL,
+    time REAL NULL,
     FOREIGN KEY(idPermissao) references permissao(id)
 );
 

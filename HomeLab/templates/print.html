@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!--<meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0"> -->
+       <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+       <script type = "text/javascript" src = "{{ url_for('static', filename = 'js/home.js') }}" ></script>
+       <script type="text/javascript" src="/static/js/jquery/jquery-3.5.0.min.js"/>
+       <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"/>
+       <script type="text/javascript"src="/static/js/bootstrap/bootstrap.min.js"></script>
+       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+       <link rel="stylesheet" href="/static/css/home.css">
+</head>
+<body>
+    <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
+        <div class="conteiner">
+            <form class="">
+                <div class="form-group row">
+                    <label class="printer-content-label">impressora</label>
+                    <div class="">
+                    	<select class="printer-content-input" placeholder="imprimir">
+                    		<option>impressora</option>
+                    		
+                    	</select>
+                	</div>
+                </div>
+                <div class="form-group row">
+                    <label class="col col-form-label">páginas</label>
+                    <div class="col-10">
+                    	<select class="form-control" placeholder="1">
+                    		<option>todas</option>
+                    		<option>personalizado</option>
+                    	</select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col col-form-label">copias</label>
+                    <div class="col-10">
+                    	<input class="form-control" placeholder="1"/>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col col-form-label">cor</label>
+                    <div class="col-10"><select class="form-control" placeholder="imprimir"><option>preto e branco</option>
+                    	<option>colorido</option>
+                    </select>
+                	</div>
+            	</div>
+                <div class="form-group row">
+                    <label class="col col-form-label">tamanho</label>
+                    <div class="col-10"><select class="form-control" placeholder="imprimir"><option>A4</option></select>
+                </div>
+            	</div>
+            	<div class="d-flex justify-content-end">
+            		<div class="form-group">
+            			<button class="btn btn-primary">imprimir</button>
+            			<button class="btn btn-danger">cancelar</button>
+            		</div>
+            	</div>
+            </form>
+        </div>
+    </main>
+</body>
+</html>

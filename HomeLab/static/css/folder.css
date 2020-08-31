@@ -86,3 +86,27 @@ td[data-type="col-opcao"]{
   background: #555;
   left:0;
 }
+
+/*   PRINT STYLE   */
+
+#printer-content{
+    display:none;
+}
+
+#folder-modal .modal-content{
+    max-height:500px;
+}
+#folder-modal #modal-body{
+    overflow:auto;
+}
+
+.printer-content-label{
+    padding-left: 15px;
+}
+
+.printer-content-input{
+    padding-left: 15px;
+}
+.printer-buttons{
+    margin-right: 15px;
+}

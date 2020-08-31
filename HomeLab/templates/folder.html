@@ -1,16 +1,19 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery/jquery-3.5.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/bootstrap/bootstrap.min.css')}}">
 
-    <script type="text/javascript" src="/static/js/jquery/jquery-3.5.0.min.js"></script>
-    <script type="text/javascript"src="/static/js/bootstrap/bootstrap.min.js"></script>
     <script type="text/javascript" src="/static/js/folder.js"></script>
-
     <link rel="stylesheet" href="/static/css/folder.css">
+
 </head>
 <body>
-    <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
+    <div class="conteiner" style="">
+        <div class="row" style="">
+            {% include 'menu.html' %}
+            <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
     <form enctype="multipart/form-data" onsubmit="return false" class="table-dark">
         <div class="row" style="">
             <div class="col-3 col-md-6">
@@ -61,8 +64,8 @@
                                     {{arq.nomeArquivo}}
                                 </a>
                             </td>
-                            <td data-type="col-data">null</td>
-                            <td data-type="col-tamanho">null</td>
+                            <td data-type="col-data">{{arq.date}}</td>
+                            <td data-type="col-tamanho">{{arq.size}}</td>
                             <td data-type="col-opcao">
                                 <a href="#" class="td-btn-opcao" onclick="info_file({{arq.id}});">
                                     <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="ellipsis-v" class="svg-inline--fa fa-ellipsis-v fa-w-6" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 192 512"><path fill="currentColor" d="M96 184c39.8 0 72 32.2 72 72s-32.2 72-72 72-72-32.2-72-72 32.2-72 72-72zM24 80c0 39.8 32.2 72 72 72s72-32.2 72-72S135.8 8 96 8 24 40.2 24 80zm0 352c0 39.8 32.2 72 72 72s72-32.2 72-72-32.2-72-72-72-72 32.2-72 72z"></path></svg>
@@ -76,7 +79,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="modal" tabindex="-1" role="dialog">
+            <div id="folder-modal" class="modal" tabindex="-1" role="dialog">
               <div class="modal-dialog" role="document">
                 <div class="modal-content">
                   <div class="modal-header">
@@ -87,13 +90,86 @@
                     </button>
                   </div>
                   <div id="modal-body" class="modal-body">
-                      <p><table class="table-dark w-100">
+                      <p><table class="table-dark w-100"></table>
+                      </p>
+                      <!-- Printer File -->
+                      <div id="printer-content" class="conteiner">
+                        <form class="">
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">impressora</label>
+                                <div class="col-6">
+                                    <select class="form-control" placeholder="imprimir">
+                                        <option>impressora</option>
 
-                  </table></p>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">páginas</label>
+                                <div class="col-6">
+                                    <select class="form-control" placeholder="1">
+                                        <option>todas</option>
+                                        <option>personalizado</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">copias</label>
+                                <div class="col-6">
+                                    <input class="form-control" placeholder="1"/>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">cor</label>
+                                <div class="col-6"><select class="form-control" placeholder="imprimir"><option>preto e branco</option>
+                                    <option>colorido</option>
+                                </select>
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-5 col-form-label">tamanho</label>
+                                <div class="col-6"><select class="form-control" placeholder="imprimir"><option>A4</option></select>
+                            </div>
+                            </div>
+                            <div class="printer-buttons d-flex justify-content-end">
+                                <div class="form-group">
+                                    <button class="btn btn-primary">imprimir</button>
+                                    <button class="btn btn-danger">cancelar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                   </div>
                   <div class="modal-footer">
-                    <a id="btn_download" href="#" type="button" class="btn btn-primary">download</a>
-                    <button id="close_2" type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <!-- delete button -->
+                    <a id="btn_delete" href="#" type="button" class="btn btn-danger">
+                        <svg fill="#000000" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" width="32px" height="32px"><path d="M 15 4 C 14.476563 4 13.941406 4.183594 13.5625 4.5625 C 13.183594 4.941406 13 5.476563 13 6 L 13 7 L 7 7 L 7 9 L 8 9 L 8 25 C 8 26.644531 9.355469 28 11 28 L 23 28 C 24.644531 28 26 26.644531 26 25 L 26 9 L 27 9 L 27 7 L 21 7 L 21 6 C 21 5.476563 20.816406 4.941406 20.4375 4.5625 C 20.058594 4.183594 19.523438 4 19 4 Z M 15 6 L 19 6 L 19 7 L 15 7 Z M 10 9 L 24 9 L 24 25 C 24 25.554688 23.554688 26 23 26 L 11 26 C 10.445313 26 10 25.554688 10 25 Z M 12 12 L 12 23 L 14 23 L 14 12 Z M 16 12 L 16 23 L 18 23 L 18 12 Z M 20 12 L 20 23 L 22 23 L 22 12 Z"/></svg>
+                    </a>
+
+                    <!-- print button -->
+                    <a id="btn_print" href="#" type="button" class="btn btn-info" onclick="show_print_content();">
+
+                        <svg id="_x31__px" enable-background="new 0 0 24 24" height="512" viewBox="0 0 24 24" width="512" xmlns="http://www.w3.org/2000/svg"><path d="m21.5 18h-3c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h3c.827 0 1.5-.673 1.5-1.5v-7c0-.827-.673-1.5-1.5-1.5h-19c-.827 0-1.5.673-1.5 1.5v7c0 .827.673 1.5 1.5 1.5h3c.276 0 .5.224.5.5s-.224.5-.5.5h-3c-1.379 0-2.5-1.122-2.5-2.5v-7c0-1.378 1.121-2.5 2.5-2.5h19c1.379 0 2.5 1.122 2.5 2.5v7c0 1.378-1.121 2.5-2.5 2.5z"/><path d="m14.5 21h-6c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h6c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m14.5 19h-6c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h6c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m10.5 17h-2c-.276 0-.5-.224-.5-.5s.224-.5.5-.5h2c.276 0 .5.224.5.5s-.224.5-.5.5z"/><path d="m18.5 7c-.276 0-.5-.224-.5-.5v-4c0-.827-.673-1.5-1.5-1.5h-9c-.827 0-1.5.673-1.5 1.5v4c0 .276-.224.5-.5.5s-.5-.224-.5-.5v-4c0-1.378 1.121-2.5 2.5-2.5h9c1.379 0 2.5 1.122 2.5 2.5v4c0 .276-.224.5-.5.5z"/><path d="m16.5 24h-9c-1.379 0-2.5-1.122-2.5-2.5v-8c0-.276.224-.5.5-.5h13c.276 0 .5.224.5.5v8c0 1.378-1.121 2.5-2.5 2.5zm-10.5-10v7.5c0 .827.673 1.5 1.5 1.5h9c.827 0 1.5-.673 1.5-1.5v-7.5z"/></svg>
+                    </a>
+                    <!-- download button -->
+                    <a id="btn_download" href="#" type="button" class="btn btn-primary">
+
+                        <svg height="410pt" viewBox="-10 0 410 410" width="410pt" xmlns="http://www.w3.org/2000/svg"><path d="m109.074219 222.371094 78.707031 73.992187c3.851562 3.621094 9.851562 3.621094 13.703125 0l78.707031-73.992187c4.023438-3.785156 4.21875-10.113282.4375-14.136719-3.785156-4.023437-10.113281-4.21875-14.136718-.4375l-61.859376 58.15625v-255.953125c0-5.523438-4.476562-10-10-10-5.523437 0-10 4.476562-10 10v255.953125l-61.859374-58.152344c-4.023438-3.785156-10.351563-3.589843-14.136719.433594-3.78125 4.027344-3.585938 10.355469.4375 14.136719zm0 0"/><path d="m339.265625 74.300781h-50.707031c-5.523438 0-10 4.476563-10 10 0 5.523438 4.476562 10 10 10h50.707031c16.5625.019531 29.980469 13.4375 30 30v235.699219c-.019531 16.5625-13.4375 29.980469-30 30h-289.265625c-16.5625-.019531-29.980469-13.4375-30-30v-235.699219c.019531-16.5625 13.4375-29.980469 30-30h50.710938c5.519531 0 10-4.476562 10-10 0-5.523437-4.480469-10-10-10h-50.710938c-27.601562.03125-49.96875 22.398438-50 50v235.699219c.03125 27.601562 22.398438 49.96875 50 50h289.265625c27.601563-.03125 49.96875-22.398438 50-50v-235.699219c-.03125-27.601562-22.398437-49.96875-50-50zm0 0"/></svg>
+                    </a>
+                    <button id="close_2" type="button" class="btn btn-secondary" data-dismiss="modal">
+                        <svg version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                             viewBox="0 0 511.996 511.996" style="enable-background:new 0 0 511.996 511.996;padding:3px;" xml:space="preserve">
+                            <g>
+                                <g>
+                                    <path d="M503.462,213.331H156.19l80.307-81.894c3.234-3.311,3.251-8.602,0.017-11.93l-47.386-48.666
+                                        c-1.604-1.647-3.806-2.577-6.11-2.577s-4.514,0.93-6.118,2.577L2.419,250.042c-3.226,3.319-3.226,8.602,0,11.913l174.481,179.2
+                                        c1.604,1.647,3.806,2.577,6.11,2.577s4.506-0.93,6.118-2.577l47.386-48.666c3.234-3.319,3.226-8.619-0.017-11.93l-80.307-81.894
+                                        h347.273c4.71,0,8.533-3.823,8.533-8.533v-68.267C511.996,217.154,508.173,213.331,503.462,213.331z"/>
+                                </g>
+                            </g>
+                        </svg>
+
+                    </button>
                   </div>
                 </div>
               </div>
@@ -101,5 +177,7 @@
         </div>
     </form>
     </main>
+        </div>
+    </div>
 </body>
 </html>

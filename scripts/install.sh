@@ -110,3 +110,5 @@ echo "para finalizar utilize systemctl stop homelab nginx"
 echo "instalação finalizada !"
 
 # USER FIM
+# recupera o nome da impressora
+#sudo cat /etc/cups/printers.conf | grep -v "#" | grep "<Printer*\>" | sed "s/<//g;s/>//g" | cut -d " " -f2

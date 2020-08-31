@@ -76,7 +76,7 @@ svg{
     background-color: var(--text-link);
 }
 .form-control{
-    min-width: 15rem;
+    /*min-width: 15rem;*/
     height: 2rem;
     background: #23232e;
     color: white;

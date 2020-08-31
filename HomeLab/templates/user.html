@@ -2,78 +2,83 @@
 <html lang="pt-br" dir="ltr">
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no, target-densityDpi=device-dpi" />
+    <script type="text/javascript" src="{{url_for('static', filename='js/jquery/jquery-3.5.0.min.js')}}"></script>
+    <script type="text/javascript" src="{{url_for('static', filename='js/bootstrap/bootstrap.min.js')}}"></script>
+    <link rel="stylesheet" href="{{url_for('static', filename= 'css/bootstrap/bootstrap.min.css')}}">
 
+    <!-- irei umar home.js para user.js   -->
+    <script type="text/javascript" src="{{url_for('static', filename='js/home.js')}}"></script>
     <link rel= "stylesheet" type= "text/css" href="{{ url_for('static',filename='css/user.css')}}">
-    <script type="text/javascript" src=""></script>
-    <script type="text/javascript" src="/static/js/jquery/jquery-3.5.0.min.js"/>
-       <link rel="stylesheet" href="/static/css/bootstrap/bootstrap.min.css"/>
-       <script type="text/javascript"src="/static/js/bootstrap/bootstrap.min.js"></script>
-       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-<!--    <link rel="stylesheet" href="static/css/bootstrap/bootstrap.min.css">-->
+
     <style>
 
     </style>
 </head>
 <body>
-    <main class="col-12 col-sm-10 col-md-10 col-lg-10 p-5">
-        <form method="post">
-            <div class="row justify-content-center">
-                <div class="w-100" style="height: 2vh;"></div>
-                <div class="col-12 order-2 col-md-6 col-lg-6">
-                    <div class="row">
-                        <div class="col-12">
-                            <input class="form-control" id="input-login" name="login" placeholder="{{usuario.login}}" value="">
+    <div class="conteiner" style="">
+        <div class="row" style="">
+            {% include 'menu.html' %}
+
+            <main class="col-12 w-100 h-100  col-sm-10 col-md-9 col-lg-9 p-5">
+                <form method="post">
+                    <div class="row justify-content-center">
+                        <div class="w-100" style="height: 2vh;"></div>
+                        <div class="col-12 order-2 col-md-6 col-lg-6">
+                            <div class="row">
+                                <div class="col-12">
+                                    <input class="form-control" id="input-login" name="login" placeholder="{{usuario.login}}" value="">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" id="input-nome" name="nome" placeholder="{{usuario.nome}}" value="">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" id="input-email" name="email" placeholder="{{usuario.email}}" value="">
+                                </div>
+                                <div class="col-12">
+                                    <input class="form-control" id="input-senha" name="senha" type="password" placeholder="senha" value="">
+                                </div>
+                                <div class="col-6">
+                                    <a href="#" class="btn btn-primary m-2" onclick=""> confirmar </a>
+                                </div>
+                                <div class="col-6">
+                                    <button class="btn btn-secondary m-2">mudar senha</button>
+                                </div>
+                            </div>
+                        </div><div class="w-100 order-3" style="height: 2vh;"></div>
+
+                        <div class="clearfix visible-block">
+                        <div class="col-6 order-1">
+                            <button type="submit" class="img-fluid btn btn-primary" style="min-width: 150px;min-height: 150px;">
+                                <img src="/static/images/user-solid.svg" class="" style="width: 100%;height: auto;">
+                            </button>
                         </div>
-                        <div class="col-12">
-                            <input class="form-control" id="input-nome" name="nome" placeholder="{{usuario.nome}}" value="">
+                            <div class="w-100" style="height: 20px;"></div>
                         </div>
-                        <div class="col-12">
-                            <input class="form-control" id="input-email" name="email" placeholder="{{usuario.email}}" value="">
-                        </div>
-                        <div class="col-12">
-                            <input class="form-control" id="input-senha" name="senha" type="password" placeholder="senha" value="">
-                        </div>
-                        <div class="col-6">
-                            <a href="#" class="btn btn-primary m-2" onclick="update_usuario()"> confirmar </a>
-                        </div>
-                        <div class="col-6">
-                            <button class="btn btn-secondary m-2">mudar senha</button>
+
+                        <div class="col-12 order-4 col-md-10 col-lg-10">
+                            <table class="table table-dark">
+                                <tbody><tr>
+                                    <th scope="col">nome</th>
+                                    <th scope="col">descrição</th>
+                                    <th scope="col">permissão</th>
+                                </tr>
+                                </tbody><tbody>
+                                {%for permissao in usuario.permissoes %}
+                                <tr>
+                                    <td>{{permissao.nome}}</td>
+                                    <td>{{permissao.descricao}}</td>
+                                    <td>{{permissao.nivelRestricao}}</td>
+                                </tr>
+                                {%endfor%}
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-                </div><div class="w-100 order-3" style="height: 2vh;"></div>
-
-                <div class="clearfix visible-block">
-                <div class="col-6 order-1">
-                    <button type="submit" class="img-fluid btn btn-primary" style="min-width: 150px;min-height: 150px;">
-                        <img src="/static/images/user-solid.svg" class="" style="width: 100%;height: auto;">
-                    </button>
-                </div>
-                    <div class="w-100" style="height: 20px;"></div>
-                </div>
-
-                <div class="col-12 order-4 col-md-10 col-lg-10">
-                    <table class="table table-dark">
-                        <tbody><tr>
-                            <th scope="col">nome</th>
-                            <th scope="col">descrição</th>
-                            <th scope="col">permissão</th>
-                        </tr>
-                        </tbody><tbody>
-                        {%for permissao in usuario.permissoes %}
-                        <tr>
-                            <td>{{permissao.nome}}</td>
-                            <td>{{permissao.descricao}}</td>
-                            <td>{{permissao.nivelRestricao}}</td>
-                        </tr>
-                        {%endfor%}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-            <div class="row">
-            </div>
-        </form>
-    </main>
-
+                    <div class="row">
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
 </body>
 </html>

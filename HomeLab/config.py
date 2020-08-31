@@ -9,5 +9,6 @@ config = \
 {
     'engine_name' : "sqlite:////"+ dir +"/bancos/homelab.db?check_same_thread=False",
     'engine_echo' : True,
-    'data_path': os.path.join(dir, "data")
+    'data_path': os.path.join(dir, "data"),
+    'homelab_path': dir
 }

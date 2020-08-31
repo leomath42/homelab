@@ -4,6 +4,7 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask import Flask
 import os
+import json
 
 # cria uma scoped session com DataBase
 engine = create_engine(config['engine_name'])

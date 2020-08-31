@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<homelab>
+	<Device name="quarto">
+		<id value='1'/>
+		<descriptor value='FFFF'/>
+		<connect_type value='serial'/>
+		<address value=''/>
+		<port value=''/>
+		<serial_port value='/dev/ttyACM0'/>
+		<max_block_message value='32'/>
+
+		<receive value=''/>
+		<send value=''/>
+	</Device>
+</homelab>
